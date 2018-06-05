@@ -6,7 +6,10 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: Sequelize.STRING,
@@ -53,6 +56,9 @@ User.encryptPassword = function (plainText, salt) {
     .digest('hex')
 }
 
+User.findUserByEmail = function(email){
+  return User.findOne({where: {email}})
+}
 /**
  * hooks
  */

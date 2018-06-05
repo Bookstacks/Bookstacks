@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import AllBooks from './AllBooks'
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -25,8 +26,11 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       )}
     </nav>
     <hr />
+    <AllBooks/>
   </div>
 )
+
+//Allbooks component is added to render functionality. Make a route / move to other component later. 
 
 /**
  * CONTAINER
