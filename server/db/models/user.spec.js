@@ -4,6 +4,7 @@ const { expect } = require('chai')
 const db = require('../index')
 const User = db.model('user')
 
+
 describe('▒▒▒ Backend tests ▒▒▒', () => {
   beforeEach('Synchronize and clear database', () => db.sync({ force: true }));
 
@@ -38,6 +39,7 @@ describe('▒▒▒ Backend tests ▒▒▒', () => {
       });
 
     });
+
   })
 
 
