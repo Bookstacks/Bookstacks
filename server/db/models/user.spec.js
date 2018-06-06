@@ -29,7 +29,7 @@ describe('▒▒▒ Backend tests ▒▒▒', () => {
           return user.validate()
             .then(() => { throw new Error('Promise should have rejected'); })
             .catch(err => {
-              expect(err).to.exist;
+              // expect(err).to.exist;
               expect(err).to.be.an('error');
 
 

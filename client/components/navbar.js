@@ -7,7 +7,7 @@ import AllBooks from './AllBooks'
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>Bookstacks</h1>
     <nav>
       <div>
         <Link to='/allbooks'>Books</Link>
