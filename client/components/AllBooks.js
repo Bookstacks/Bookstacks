@@ -28,7 +28,9 @@ class AllBooks extends Component {
           {filteredBooks.map(book => {
             return (
               <div key={book.id}>
+                <Link to={`/books/${book.id}`}>
                 <img id="book-img" key={book.imageUrl} src={book.imageUrl} />
+                </Link>
                 <br />
                 Title : {book.title}
                 <br />
