@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, AllBooks} from './components'
 import {me} from './store'
+import SingleBook from "./components/SingleBook";
 
 /**
  * COMPONENT
@@ -22,6 +23,7 @@ class Routes extends Component {
         <Route path = "/allbooks" component = { AllBooks }/>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/books/:id" component={SingleBook} />
         {
           isLoggedIn &&
             <Switch>
