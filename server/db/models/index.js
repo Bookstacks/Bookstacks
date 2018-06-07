@@ -12,12 +12,22 @@ const Book = require('./book')
 
 LineItem.belongsTo(Order);
 Order.hasMany(LineItem);
+
 User.hasMany(Reviews);
 Reviews.belongsTo(User);
-User.hasMany(Book, {as: 'ordered_book', constraints: false})
-User.belongsTo(Book, {as: 'ordered_books', constraints: false})
-Book.hasMany(User, {as: 'ordered_customer', constraints: false})
-Book.belongsTo(User, {as: 'ordered_customers', constraints: false})
+
+Book.hasMany(Reviews);
+Reviews.belongsTo(Book);
+
+Book.hasMany(LineItem);
+LineItem.belongsTo(Book);
+
+Order.hasMany(User);
+User.belongsTo(Order)
+
+
+
+
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
