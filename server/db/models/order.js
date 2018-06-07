@@ -5,16 +5,16 @@ const Order = db.define('order', {
    userId: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    isCart: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
     }
 });
 
 const LineItem = db.define('lineItem', {
     price: {
         type: Sequelize.DECIMAL,
-        allowNull: false
-    },
-    productId: {
-        type: Sequelize.INTEGER,
         allowNull: false
     },
     quantity: {
