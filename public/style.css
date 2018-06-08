@@ -26,6 +26,32 @@ form div {
 	width : 150px;
 	height : 225px;
 }
+
+table{
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px 1px black;
+  margin: auto;
+}
+table, tbody, td, th{
+  border-bottom: rgba(87, 71, 71, 0.5) 1px solid;
+}
+th, td {
+  padding: 10px 30px;
+}
+
+#totalColumn{
+  color: blue;
+}
+
+button{
+  padding: 7px 15px;
+  margin-top: 50px;
+}
+
+#confirmation{
+  text-align: center;
+}
+
 .title {
   display: flex;
   flex-direction: row;
@@ -65,5 +91,6 @@ nav {
   background-color: lightslategrey;
   box-shadow: 1.5px 2px 3px inset black;
 }
+
 
 
