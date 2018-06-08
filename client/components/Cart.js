@@ -1,22 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchBooks } from "../store";
+import { fetchCart } from "../store";
 
 class Cart extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cart: []
-        }
-    }
+   
 
-    componentDidMount(){
-        if (!localStorage.cart){
-            localStorage.setItem('cart', JSON.stringify([]))
-        }
-        this.setState({cart: localStorage.cart})
-    }
+  componentDidMount(){
+      const { userId } = this.props.match.params;
+      this.props.loadCart(+userId);
+  }
 
     handleAdd(ev) {
        
@@ -27,11 +20,13 @@ class Cart extends Component {
     }
 
     render() {
+        console.log(this.props);
+        const { lineItems } = this.props.cart;
         
         return (
             <div>
                 <h1>Cart</h1>
-                <div>
+                {/* <div>
                     {cart.map(item => {
                         return (
                             <div key={item.id}>
@@ -52,23 +47,26 @@ class Cart extends Component {
                             </div>
                         );
                     })}
-                </div>
+                </div> */}
             </div>
         );
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         books: state.books
-//     };
-// };
+const mapStateToProps = state => {
+    return {
+        cart: state.cart,
+        user: state.user.id
+    };
+};
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         loadAllBooks: dispatch(fetchBooks())
-//     };
-// };
+const mapDispatchToProps = dispatch => {
+    return {
+        loadCart: (userId) => {
+            dispatch(fetchCart(userId))
+        }
+    };
+};
 
 export default connect(
     mapStateToProps,
