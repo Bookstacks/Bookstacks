@@ -60,3 +60,13 @@ router.post("/:userId/:bookId", (req, res) => {
       } else res.sendStatus(404);
     });
 });
+
+router.put('/:lineItemId', (req, res, next) => {
+    let { lineItemId } = req.params;
+    LineItem.update({quantity: Sequelize.literal("quantity + 1")}, {returning: true, where: {id: lineItemId}})
+    .then(([rowsUpdate, [updatedLineItem]]) => {
+        res.json(updatedLineItem.data);
+      })
+      .catch(next);
+})
+

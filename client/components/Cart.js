@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchCart } from "../store";
+import axios from 'axios'
+
+import { fetchCart, fetchUpdatedCart } from "../store";
 
 class Cart extends Component {
-   
+    constructor(){
+        super()
+        this.handleAdd = this.handleAdd.bind(this)
+    }
 
   componentDidMount(){
       const { userId } = this.props.match.params;
       this.props.loadCart(+userId);
   }
 
+
     handleAdd(ev) {
-       
+        ev.preventDefault();
+       console.log(ev.target.name)
+       this.props.reloadCart(ev.target.name);
     }
 
     handleSubtract(ev) {
@@ -22,34 +30,36 @@ class Cart extends Component {
     render() {
         console.log(this.props);
         const { lineItems } = this.props.cart;
+        console.log(lineItems)
         
-        return (
+        return lineItems ? (
             <div>
                 <h1>Cart</h1>
-                {/* <div>
-                    {cart.map(item => {
+                <div>
+                    {lineItems.map(item => {
                         return (
                             <div key={item.id}>
-                                <Link to={`/books/${item.id}`}>
-                                    <img id="item-img" key={item.imageUrl} src={item.imageUrl} />
+                                <Link to={`/books/${item.book.id}`}>
+                                    <img id="item-img" key={item.book.imageUrl} src={item.book.imageUrl} />
                                 </Link>
                                 <br />
-                                Title : {item.title}
+                                Title : {item.book.title}
                                 <br />
-                                Author : {item.author}
+                                Author : {item.book.author}
                                 <br />
                                 Price : ${item.price}
                                 <br />
                                 Quantity: {item.quantity} 
                                 <button onClick={this.handleSubtract}>-</button>
-                                <button onClick={this.handleAdd}>+</button>
+                                <button onClick={this.handleAdd} name={item.id} value={item.quantity}>+</button>
                                 <br />
                             </div>
                         );
                     })}
-                </div> */}
+                </div>
             </div>
-        );
+        )
+        : null;
     }
 }
 
@@ -64,6 +74,9 @@ const mapDispatchToProps = dispatch => {
     return {
         loadCart: (userId) => {
             dispatch(fetchCart(userId))
+        }, 
+        reloadCart : (lineItemId) => {
+            dispatch(fetchUpdatedCart(lineItemId))
         }
     };
 };

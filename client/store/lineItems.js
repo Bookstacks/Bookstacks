@@ -1,16 +1,10 @@
-import axios from 'axios'
-import history from '../history'
-
-/**
- * ACTION TYPES
- */
-const GET_CART = 'GET_CART'
-const UPDATE_CART = 'UPDATE_CART'
-
 /**
  * INITIAL STATE
  */
-const defaultCart = {}
+const defaultState = {
+  cart : {},
+  lineItem: {},
+}
 
 /**
  * ACTION CREATORS
@@ -39,7 +33,7 @@ export const fetchUpdatedLineItem = (lineItemId) =>
 /**
  * REDUCER
  */
-export default function (state = defaultCart, action) {
+export default function (state = defaultState, action) {
   switch (action.type) {
     case GET_CART:
       return action.cart
