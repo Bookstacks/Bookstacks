@@ -6,10 +6,10 @@ import { fetchCart } from "../store";
 class Cart extends Component {
    
 
-  componentDidMount(){
-      const { userId } = this.props.match.params;
-      this.props.loadCart(+userId);
-  }
+    componentDidMount(props){
+        const { userId } = this.props.match.params;
+        this.props.loadCart(+userId);
+    }
 
     handleAdd(ev) {
        
@@ -20,14 +20,13 @@ class Cart extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { lineItems } = this.props.cart;
-        
+        console.log(this.props.cart, 'cart');
         return (
             <div>
                 <h1>Cart</h1>
-                {/* <div>
-                    {cart.map(item => {
+                <div>
+                    {lineItems.map(item => {
                         return (
                             <div key={item.id}>
                                 <Link to={`/books/${item.id}`}>
@@ -47,7 +46,7 @@ class Cart extends Component {
                             </div>
                         );
                     })}
-                </div> */}
+                </div> 
             </div>
         );
     }
