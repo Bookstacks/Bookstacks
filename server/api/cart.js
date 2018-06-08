@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User , Order, LineItem} = require('../db/models')
+const { User , Order, LineItem, Book} = require('../db/models')
 module.exports = router
 
 // const newCart = {}
@@ -7,7 +7,7 @@ module.exports = router
 // const cart = JSON.parse(localStorage.getItem('cart'))
 // cart.items = {}
 
-router.post('/:userId/:bookId', (req, res) => {// creates cart order
+router.get('/:userId/:bookId', (req, res) => {// creates cart order
     User.findById(req.params.userId)//check if user exists
     .then(user => {
         if (user) return user
@@ -21,9 +21,11 @@ router.post('/:userId/:bookId', (req, res) => {// creates cart order
             else return order
         })
         .then(order => {
-            // hardcoded but change with data in req.body
-            // error if book does not exist. 
-            LineItem.create({bookId : req.params.bookId, orderId : order.id, price : 1, quantity : 1}).then(() => res.sendStatus(202))
+            Book.findById(req.params.bookId)
+            .then(book => {
+                //Creates lineitem with bookId and orderId
+                LineItem.create({bookId : book.id, orderId : order.id, price : book.price, quantity : book.inventoryQuantity}).then(() => res.sendStatus(202))
+            })
         })
         }
     })
