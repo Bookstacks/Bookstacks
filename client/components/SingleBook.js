@@ -15,9 +15,9 @@ class SingleBook extends Component {
 
   render(){
     // all properties in books: title, author, genre, description, price, imageUrl
-    console.log("SingleBook")
-    console.log(this.props)
-    console.log(this.state)
+    // console.log("SingleBook")
+    // console.log(this.props)
+    // console.log(this.state)
     const book = this.props.book;
 console.log(this.props)
     return (
@@ -34,6 +34,7 @@ console.log(this.props)
 }
 
 const mapStateToProps = (state) => {
+  // console.log(state)
   return {
     book: state.singleBook
   }
