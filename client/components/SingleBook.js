@@ -19,7 +19,7 @@ class SingleBook extends Component {
     // console.log(this.props)
     // console.log(this.state)
     const book = this.props.book;
-
+console.log(this.props)
     return (
       <div>
         <h1>{book.title}</h1>
