@@ -22,6 +22,7 @@ class Cart extends Component {
     render() {
         const { lineItems } = this.props.cart;
         console.log(this.props.cart, 'cart');
+
         return (
             <div>
                 <h1>Cart</h1>
@@ -46,11 +47,14 @@ class Cart extends Component {
                             </div>
                         );
                     })}
+
                 </div> 
+
             </div>
         );
     }
 }
+
 
 const mapStateToProps = state => {
     return {
@@ -66,6 +70,7 @@ const mapDispatchToProps = dispatch => {
         }
     };
 };
+
 
 export default connect(
     mapStateToProps,

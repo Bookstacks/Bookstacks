@@ -1,8 +1,10 @@
 body {
   font-family: sans-serif;
+  margin: 0;
 }
 
 a {
+  color: black;
   text-decoration: none;
 }
 
@@ -24,3 +26,71 @@ form div {
 	width : 150px;
 	height : 225px;
 }
+
+table{
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px 1px black;
+  margin: auto;
+}
+table, tbody, td, th{
+  border-bottom: rgba(87, 71, 71, 0.5) 1px solid;
+}
+th, td {
+  padding: 10px 30px;
+}
+
+#totalColumn{
+  color: blue;
+}
+
+button{
+  padding: 7px 15px;
+  margin-top: 50px;
+}
+
+#confirmation{
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: flex-end;
+  background: gray;
+}
+
+.nav-item {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-radius: 10px;
+  background-color: darkgray;
+  width: 5.5em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 4px black;
+  /* transition: all .2s; */
+}
+.nav-right {
+  display: flex;
+  align-self: center;
+}
+.nav-item-right{
+  align-items: center;
+  height: 3em;
+}
+.nav-item:hover {
+  color: white;
+  background-color: lightslategrey;
+  box-shadow: 1.5px 2px 3px inset black;
+}
+
+
+
