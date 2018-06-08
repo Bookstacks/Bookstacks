@@ -1,12 +1,25 @@
 const router = require("express").Router();
 const { User, Order, LineItem, Book } = require("../db/models");
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 module.exports = router;
 
-// const newCart = {}
-// localStorage.setItem('cart', JSON.stringify(newCart))
-// const cart = JSON.parse(localStorage.getItem('cart'))
-// cart.items = {}
+
+router.get("/:userId", (req, res) => {
+  Order.findOne({
+    where: {
+      userId: req.params.userId,
+      isCart: true
+    },
+    include: [{
+        model: LineItem,
+        include: [{
+            model: Book
+        }]
+
+    }]
+  })
+  .then( order => res.send(order));
+});
 
 router.post("/:userId/:bookId", (req, res) => {
   // creates cart order
@@ -22,47 +35,28 @@ router.post("/:userId/:bookId", (req, res) => {
           .then(order => {
             Book.findById(req.params.bookId).then(book => {
               //Creates lineitem with bookId and orderId
-              if(book){
-                LineItem.findOne({ where: { orderId: order.id, bookId: book.id } })
-                .then(lineItem => {
-                  if (!lineItem) {
-                    LineItem.create({
-                      bookId: book.id,
-                      orderId: order.id,
-                      price: book.price,
-                      quantity: 1
-                    });
-                  } else {
-                    lineItem.update({
-                      quantity: Sequelize.literal("quantity + 1")
-                    });
-                  }
+              if (book) {
+                LineItem.findOne({
+                  where: { orderId: order.id, bookId: book.id }
                 })
-                .then(() => res.sendStatus(202));
+                  .then(lineItem => {
+                    if (!lineItem) {
+                      LineItem.create({
+                        bookId: book.id,
+                        orderId: order.id,
+                        price: book.price,
+                        quantity: 1
+                      });
+                    } else {
+                      lineItem.update({
+                        quantity: Sequelize.literal("quantity + 1")
+                      });
+                    }
+                  })
+                  .then(() => res.sendStatus(202));
               } else res.sendStatus(404);
             });
           });
       } else res.sendStatus(404);
     });
-
-  //     // User.findAll({include:[{model: Order}], where: {id: req.params.userId, isCart: true}})
-  //     //     .then(user => {
-  //     //         console.log(user, ',,dlf**********')
-  //     //         if (user) {
-
-  //     //             return user
-  //     //         }
-  //     //         else {
-
-  //     //             res.sendStatus(404)
-  //     //         }
-  //     //     })
-  //     // const { bookId } = req.body
-  //     // if (!cart.items[bookId]) {
-  //     //     cart.items[bookId] = 1
-  //     // }
-  //     // else {
-  //     //     cart.items[bookId]++
-  //     // }
-  //     // res.send(cart.items)
 });
