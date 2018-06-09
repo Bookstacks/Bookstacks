@@ -70,6 +70,7 @@ router.post("/:userId/:bookId", (req, res) => {
 router.put('/:lineItemId', (req, res, next) => {
     let { lineItemId } = req.params;
     let increment = req.body.increment;
+  
     LineItem.findById(lineItemId)
     .then(lineItem => {
       return lineItem.increment(['quantity'], {by : increment})
