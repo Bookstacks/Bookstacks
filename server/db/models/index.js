@@ -2,6 +2,7 @@ const User = require('./user')
 const { Order, LineItem } = require('./order')
 const Reviews = require('./review')
 const Book = require('./book')
+const Genre = require ('./genre')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -25,6 +26,8 @@ LineItem.belongsTo(Book);
 Order.hasMany(User);
 User.belongsTo(Order)
 
+Book.belongsToMany(Genre, {through: 'category'})
+Genre.belongsToMany(Book, {through: 'category'})
 
 
 
@@ -40,5 +43,6 @@ module.exports = {
   Order,
   LineItem,
   Reviews,
-  Book
+  Book,
+  Genre
 }
