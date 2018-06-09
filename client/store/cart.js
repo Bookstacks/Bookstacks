@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_CART = 'GET_CART'
 const UPDATE_CART = 'UPDATE_CART'
+const DELETE_LINE_ITEM = 'DELETE_LINE_ITEM'
 
 /**
  * INITIAL STATE
@@ -17,7 +18,7 @@ const defaultCart = {}
  */
 const getCart = cart => ({type: GET_CART, cart})
 const updateCart = cart => ({type: UPDATE_CART, cart})
-
+const deleteLineItem = cart => ({type : DELETE_LINE_ITEM, cart})
 /**
  * THUNK CREATORS
  */
@@ -32,15 +33,21 @@ export const fetchUpdatedLineItem = (lineItemId, userId, increment) =>
   dispatch =>{
     axios.put(`/api/cart/${lineItemId}`, {increment})
     .then(() => {
-      // fetchCart(userId)
       axios.get(`/api/cart/${userId}`)
-      .then(res => dispatch(updateCart(res.data || defaultCart)))
-  // })
+      .then(res => {
+        dispatch(updateCart(res.data || defaultCart))})
+    })
+}
+
+export const fetchDeletedLineItem = (lineItemId, userId, increment) =>
+  dispatch =>{
+    axios.delete(`/api/cart/${lineItemId}`, {increment})
+    .then(() => {
+      axios.get(`/api/cart/${userId}`)
+      .then(res => dispatch(deleteLineItem(res.data || defaultCart)))
       })
   }
-      // .then(res =>
-      //   dispatch(updateCart(res.data || defaultCart)))
-      // .catch(err => console.log(err))
+
 
 /**
  * REDUCER
@@ -51,6 +58,8 @@ export default function (state = defaultCart, action) {
       return action.cart
     case UPDATE_CART:
       return action.cart
+    case DELETE_LINE_ITEM:
+      return action.cart  
     default:
       return state
   }

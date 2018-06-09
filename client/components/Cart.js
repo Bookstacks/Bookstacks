@@ -3,35 +3,40 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 
-import { fetchCart, fetchUpdatedLineItem } from "../store";
+import { fetchCart, fetchUpdatedLineItem, fetchDeletedLineItem } from "../store";
 
 class Cart extends Component {
     constructor(){
         super()
         this.handleAdd = this.handleAdd.bind(this)
-    
         this.handleSubtract = this.handleSubtract.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
     }
 
-  componentDidMount(){
-      const { userId } = this.props.match.params;
-      this.props.loadCart(+userId);
-  }
+    componentDidMount(){
+        const { userId } = this.props.match.params;
+        this.props.loadCart(+userId);
+    }
 
     handleAdd(ev) {
         ev.preventDefault();
         const { userId } = this.props.match.params;
-        this.props.reloadCart(ev.target.name, userId, 1);
+        this.props.updateAndReloadCart(ev.target.name, userId, 1);
     }
 
     handleSubtract(ev) {
         ev.preventDefault();
         const { userId } = this.props.match.params;
-        this.props.reloadCart(ev.target.name, userId, -1);  
+        this.props.updateAndReloadCart(ev.target.name, userId, -1);  
+    }
+
+    handleDelete(ev) {
+        ev.preventDefault();
+        const { userId } = this.props.match.params;
+        this.props.deleteAndReloadCart(ev.target.name, userId);  
     }
 
     render() {
-        console.log(this.props.cart, 'props in render');
         const {lineItems} = this.props.cart;
         
         return lineItems ? (
@@ -42,7 +47,7 @@ class Cart extends Component {
                         return (
                             <div key={item.id}>
                                 <Link to={`/books/${item.book.id}`}>
-                                    <img id="item-img" key={item.book.imageUrl} src={item.book.imageUrl} />
+                                    <img id="book-img" key={item.book.imageUrl} src={item.book.imageUrl} />
                                 </Link>
                                 <br />
                                 Title : {item.book.title}
@@ -55,18 +60,19 @@ class Cart extends Component {
                                 <button onClick={this.handleSubtract} name={item.id} value={item.quantity}>-</button>
                                 <button onClick={this.handleAdd} name={item.id} value={item.quantity}>+</button>
                                 <br />
+                                <button onClick = {this.handleDelete} name={item.id} >Remove Item</button>
                             </div>
                         );
                     })}
                 </div>
+                <Link to='/checkout'><button>SUBMIT</button></Link>
             </div>
         )
-        : null;
+        : <div>NO BOOKS ARE IN CART. ADD BOOKS</div>;
     }
 }
 
 const mapStateToProps = state => {
-    console.log(state, 'state')
     return {
         cart: state.cart,
         user: state.user.id
@@ -78,8 +84,11 @@ const mapDispatchToProps = dispatch => {
         loadCart: (userId) => {
             dispatch(fetchCart(userId))
         }, 
-        reloadCart : (lineItemId, userId, increment) => {
+        updateAndReloadCart : (lineItemId, userId, increment) => {
             dispatch(fetchUpdatedLineItem(lineItemId, userId, increment))
+        },
+        deleteAndReloadCart : (lineItemId, userId) => {
+            dispatch(fetchDeletedLineItem(lineItemId, userId))
         }
     };
 };

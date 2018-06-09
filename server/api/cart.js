@@ -15,8 +15,8 @@ router.get("/:userId", (req, res) => {
         include: [{
             model: Book
         }]
-
-    }]
+    }],
+    order : [['lineItems', 'id', 'ASC']],
   })
   .then( order => res.send(order));
 });
@@ -64,22 +64,17 @@ router.post("/:userId/:bookId", (req, res) => {
 router.put('/:lineItemId', (req, res, next) => {
     let { lineItemId } = req.params;
     let increment = req.body.increment;
-    console.log(req.body, 'req.body')
-    console.log(increment)
-    // let { addOrSubtract } = req.body
-    // decrement(['some_fild'], { by: 2 })
+    
     LineItem.findById(lineItemId)
     .then(lineItem => lineItem.increment(['quantity'], {by : increment}))
-    .then(lineItem => res.json(lineItem.dataValues))
-      // LineItem.update({quantity: Sequelize.literal("quantity + 1")}, {returning: true, where: {id: lineItemId}})
-      // .then(([rowsUpdate, [lineItem]]) => {
-      //   // console.log(lineItem.dataValues)
-      //   res.json(lineItem.dataValues)
-      // })
-    // .then(([rowsUpdate, [lineItem]]) => {
-    //     console.log(lineItem)
-    //     res.json(lineItem.data);
-    //   })
-      .catch(next);
+    .then(lineItem => res.status(202).json(lineItem.dataValues))
+    .catch(next);
 })
 
+router.delete('/:lineItemId', (req, res, next) => {
+    let { lineItemId } = req.params;
+    LineItem.findById(lineItemId)
+    .then(lineItem => lineItem.destroy())
+    .then(lineItem => res.sendStatus(203))
+    .catch(next);
+})
