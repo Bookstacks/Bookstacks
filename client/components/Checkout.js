@@ -4,23 +4,14 @@ import { Link } from "react-router-dom";
 import { fetchOrder } from "../store";
 
 class Checkout extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputValue: ""
-        };
-        this.handleChange = this.handleChange.bind(this);
+    constructor() {
+        super();
     }
 
     componentDidMount() {
         return (
-            this.props.fetchUser,
-            this.props.fetchOrder(1)
+            this.props.fetchOrder(this.props.user.id)
         )
-    }
-
-    handleChange(event) {
-        this.setState({ inputValue: event.target.value });
     }
 
     render() {
