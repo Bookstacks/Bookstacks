@@ -26,7 +26,9 @@ class Cart extends Component {
     handleSubtract(ev) {
         ev.preventDefault();
         const { userId } = this.props.match.params;
-        this.props.updateAndReloadCart(ev.target.name, userId, -1);  
+        const [lineItem] = this.props.cart.lineItems.filter(item => item.id)
+        const bookId = ev.target.name;
+        if (lineItem.quantity >=1) this.props.updateAndReloadCart(ev.target.name, userId, -1);  
     }
 
     handleDelete(ev) {
