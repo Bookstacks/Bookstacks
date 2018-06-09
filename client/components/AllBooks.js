@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchBooks } from "../store";
+import { fetchBooks, fetchAddedItem } from "../store";
 
 class AllBooks extends Component {
   constructor(props) {
@@ -10,10 +10,18 @@ class AllBooks extends Component {
       inputValue: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
     this.setState({ inputValue: event.target.value });
+  }
+
+  handleClick(event){
+    event.preventDefault();
+    const userId = this.props.userId;
+    const bookId = +event.target.name;
+    this.props.addBook(userId, bookId);
   }
 
   render() {
@@ -40,6 +48,7 @@ class AllBooks extends Component {
                 <br />
                 Summary : {book.summary}
                 <br />
+                <button name = {book.id} onClick = {this.handleClick} >ADD TO CART</button>
               </div>
             );
           })}
@@ -51,13 +60,15 @@ class AllBooks extends Component {
 
 const mapStateToProps = state => {
   return {
-    books: state.books
+    books: state.books,
+    userId: state.user.id
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadAllBooks: dispatch(fetchBooks())
+    loadAllBooks: dispatch(fetchBooks()),
+    addBook : (userId, bookId) => dispatch(fetchAddedItem(userId, bookId))
   };
 };
 
