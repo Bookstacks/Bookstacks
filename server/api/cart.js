@@ -53,7 +53,7 @@ router.post("/:userId/:bookId", (req, res) => {
                       });
                     }
                   })
-                  .then(() => res.sendStatus(202));
+                  .then(cart => res.status(202).send(cart));
               } else res.sendStatus(404);
             });
           });
