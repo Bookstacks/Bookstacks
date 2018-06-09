@@ -6,7 +6,7 @@ import {logout} from '../store'
 import AllBooks from './AllBooks'
 
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, userId}) => (
   <div className='nav'>
     <h1 className='title'>Bookstacks</h1>
     <nav>

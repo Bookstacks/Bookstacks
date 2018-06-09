@@ -15,8 +15,8 @@ router.get("/:userId", (req, res) => {
         include: [{
             model: Book
         }]
-
-    }]
+    }],
+    order : [['lineItems', 'id', 'ASC']],
   })
   .then( order => res.send(order));
 });
@@ -60,3 +60,21 @@ router.post("/:userId/:bookId", (req, res) => {
       } else res.sendStatus(404);
     });
 });
+
+router.put('/:lineItemId', (req, res, next) => {
+    let { lineItemId } = req.params;
+    let increment = req.body.increment;
+    
+    LineItem.findById(lineItemId)
+    .then(lineItem => lineItem.increment(['quantity'], {by : increment}))
+    .then(lineItem => res.status(202).json(lineItem.dataValues))
+    .catch(next);
+})
+
+router.delete('/:lineItemId', (req, res, next) => {
+    let { lineItemId } = req.params;
+    LineItem.findById(lineItemId)
+    .then(lineItem => lineItem.destroy())
+    .then(lineItem => res.sendStatus(203))
+    .catch(next);
+})
