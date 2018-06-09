@@ -17,6 +17,7 @@ const defaultCart = {}
  */
 const getCart = cart => ({type: GET_CART, cart})
 const updateCart = cart => ({type: UPDATE_CART, cart})
+
 /**
  * THUNK CREATORS
  */
@@ -27,14 +28,19 @@ export const fetchCart = (userId) =>
         dispatch(getCart(res.data || defaultCart)))
       .catch(err => console.log(err))
 
-export const fetchUpdatedLineItem = (lineItemId) =>
-  dispatch =>
-    axios.put(`/api/cart/${lineItemId}`)
-      .then(res =>
-        {console.log(res.data)
-        dispatch(updateCart(res.data || defaultCart))})
-      .catch(err => console.log(err))
-
+export const fetchUpdatedLineItem = (lineItemId, userId, increment) =>
+  dispatch =>{
+    axios.put(`/api/cart/${lineItemId}`, {increment})
+    .then(() => {
+      // fetchCart(userId)
+      axios.get(`/api/cart/${userId}`)
+      .then(res => dispatch(updateCart(res.data || defaultCart)))
+  // })
+      })
+  }
+      // .then(res =>
+      //   dispatch(updateCart(res.data || defaultCart)))
+      // .catch(err => console.log(err))
 
 /**
  * REDUCER
