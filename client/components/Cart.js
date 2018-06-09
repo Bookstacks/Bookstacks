@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios'
-
 import { fetchCart, fetchUpdatedLineItem, fetchDeletedLineItem } from "../store";
 
 class Cart extends Component {
@@ -65,7 +64,7 @@ class Cart extends Component {
                         );
                     })}
                 </div>
-                <Link to='/checkout'><button>SUBMIT</button></Link>
+                <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link>
             </div>
         )
         : <div>NO BOOKS ARE IN CART. ADD BOOKS</div>;

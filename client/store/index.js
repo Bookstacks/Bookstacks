@@ -7,9 +7,8 @@ import singleBook from './singleBook'
 import books from './books'
 import cart from './cart'
 import order from './order'
-import lineItem from './lineItem'
 
-const reducer = combineReducers({user, books, singleBook, cart, order, lineItem})
+const reducer = combineReducers({user, books, singleBook, cart, order})
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -23,4 +22,3 @@ export * from './singleBook'
 export * from './books'
 export * from './cart'
 export * from './order'
-export * from './lineItem'
