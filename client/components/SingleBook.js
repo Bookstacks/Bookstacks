@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, fetchBook, fetchAddedItem} from '../store'
 import axios from 'axios';
+import BookCard from './BookCard'
 
 
 class SingleBook extends Component {
@@ -34,13 +35,14 @@ class SingleBook extends Component {
     // console.log(this.props)
     return (
       <div>
-        <h1>{book.title}</h1>
+        {/* <h1>{book.title}</h1>
         <p>{book.genre}</p>
         <p>{book.author}</p>
         <img src={book.imageUrl} />
         <p>{book.description}</p>
         <p>{book.price}</p>
-        <button name = {book.id} onClick = {this.handleClick} >ADD TO CART</button>
+        <button name = {book.id} onClick = {this.handleClick} >ADD TO CART</button> */}
+      <BookCard book={book} handleClick={this.handleClick}/>
       </div>
     )
   }
