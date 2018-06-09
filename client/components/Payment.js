@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchOrder } from "../store";
+import StripeCheckout from 'react-stripe-checkout';
 
 class Checkout extends Component {
     constructor() {
@@ -14,12 +15,27 @@ class Checkout extends Component {
         )
     }
 
+    onToken = (token) => {
+      fetch('/save-stripe-token', {
+        method: 'POST',
+        body: JSON.stringify(token),
+      }).then(response => {
+        response.json().then(data => {
+          alert(`We are in business, ${data.email}`);
+        });
+      });
+    }
+
     render() {
         // console.log(this.props)
         const items = this.props.order.lineItems
         return (
             <div>
                 <h1>Inside Payment Component</h1>
+                <StripeCheckout
+                  token={this.onToken}
+                  stripeKey="my_PUBLISHABLE_stripekey"
+                />
             </div>
         );
     }
