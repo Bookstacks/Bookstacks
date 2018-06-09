@@ -17,15 +17,6 @@ const Book = db.define('book', {
             notEmpty: true
         }
     },
-    genre: {
-        type: Sequelize.ARRAY(Sequelize.TEXT),
-        allowNull: false,
-        validate: {
-            isEmpty: function(value){
-                (value) ? true : false
-            }
-        }
-    },
     imageUrl: {
         type: Sequelize.STRING,
         defaultValue: 'https://99designs-blog.imgix.net/wp-content/uploads/2017/07/attachment_60213328-e1500059192173.jpg?auto=format&q=60&fit=max&w=930'
