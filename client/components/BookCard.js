@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardImg,
@@ -14,31 +15,27 @@ import {
 
 const BookCard = props => {
   return (
-    <Container>
-      <Row>
-        <Col sm="12" md={{ size: 8, offset: 2 }}>
-          <Card body outline color="secondary">
-            <CardBody>
-              <CardTitle>{props.book.title}</CardTitle>
-              <CardSubtitle>{props.book.author}</CardSubtitle>
-            </CardBody>
-            <CardBody>
-              <CardImg
-                top
-                width="100%"
-                src={props.book.imageUrl}
-                alt="Card image cap"
-              />
-              <CardText>{props.book.description}</CardText>
-              <CardText>Price : ${props.book.price}</CardText>
-              <Button name={props.book.id} onClick={props.handleClick}>
-                ADD TO CART
-              </Button>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <Card body outline color="secondary">
+      <CardBody>
+        <CardTitle>{props.book.title}</CardTitle>
+        <CardSubtitle>{props.book.author}</CardSubtitle>
+      </CardBody>
+      <CardBody>
+        <Link to={`/books/${props.book.id}`}>
+          <CardImg
+            top
+            width="100%"
+            src={props.book.imageUrl}
+            alt="Card image cap"
+          />
+        </Link>
+        <CardText>{props.book.description}</CardText>
+        <CardText>Price : ${props.book.price}</CardText>
+        <Button name={props.book.id} onClick={props.handleClick}>
+          ADD TO CART
+        </Button>
+      </CardBody>
+    </Card>
   );
 };
 

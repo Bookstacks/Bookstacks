@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchBooks, fetchAddedItem } from "../store";
+import BookCard from "./BookCard";
+import { Container, Row, Col, Input, FormGroup, Label } from "reactstrap";
 
 class AllBooks extends Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class AllBooks extends Component {
     this.setState({ inputValue: event.target.value });
   }
 
-  handleClick(event){
+  handleClick(event) {
     event.preventDefault();
     const userId = this.props.userId;
     const bookId = +event.target.name;
@@ -30,28 +32,35 @@ class AllBooks extends Component {
     );
     return (
       <div>
-        <h1>Available Books</h1>
-        <input placeholder="Search by Title" onChange={this.handleChange} />
+        <Col sm="12" md={{ size: 8, offset: 2 }}>
+          <h1 className="title">Available Books</h1>
+          <FormGroup row>
+            <Label for="serach" sm={2}>
+              Search by Title:
+            </Label>
+            <Col sm={10}>
+              <Input
+                type="searchBar"
+                name="searchBar"
+                id="searchBar"
+                placeholder="Enter Title Here"
+                onChange={this.handleChange}
+              />
+            </Col>
+          </FormGroup>
+        </Col>
         <div>
-          {filteredBooks.map(book => {
-            return (
-              <div key={book.id}>
-                <Link to={`/books/${book.id}`}>
-                <img id="book-img" key={book.imageUrl} src={book.imageUrl} />
-                </Link>
-                <br />
-                Title : {book.title}
-                <br />
-                Author : {book.author}
-                <br />
-                Price : ${book.price}
-                <br />
-                Summary : {book.summary}
-                <br />
-                <button name = {book.id} onClick = {this.handleClick} >ADD TO CART</button>
-              </div>
-            );
-          })}
+          <Container>
+            <Row>
+              {filteredBooks.map(book => {
+                return (
+                  <Col xs="6" sm="4" key={book.id}>
+                    <BookCard book={book} handleClick={this.handleClick} />
+                  </Col>
+                );
+              })}
+            </Row>
+          </Container>
         </div>
       </div>
     );
@@ -68,7 +77,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadAllBooks: dispatch(fetchBooks()),
-    addBook : (userId, bookId) => dispatch(fetchAddedItem(userId, bookId))
+    addBook: (userId, bookId) => dispatch(fetchAddedItem(userId, bookId))
   };
 };
 
