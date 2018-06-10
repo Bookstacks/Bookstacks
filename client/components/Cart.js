@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { fetchCart, fetchUpdatedLineItem, fetchDeletedLineItem } from "../store";
+import { CardDeck, Col } from "reactstrap";
+import BookCard from "./BookCard";
 
 class Cart extends Component {
     constructor(){
@@ -44,27 +46,15 @@ class Cart extends Component {
             <div>
                 <h1>Cart</h1>
                 <div>
+                    <CardDeck>
                     {lineItems.map(item => {
                         return (
-                            <div key={item.id}>
-                                <Link to={`/books/${item.book.id}`}>
-                                    <img id="book-img" key={item.book.imageUrl} src={item.book.imageUrl} />
-                                </Link>
-                                <br />
-                                Title : {item.book.title}
-                                <br />
-                                Author : {item.book.author}
-                                <br />
-                                Price : ${item.price}
-                                <br />
-                                Quantity: {item.quantity} 
-                                <button onClick={this.handleSubtract} name={item.id} value={item.quantity}>-</button>
-                                <button onClick={this.handleAdd} name={item.id} value={item.quantity}>+</button>
-                                <br />
-                                <button onClick = {this.handleDelete} name={item.id} >Remove Item</button>
-                            </div>
+                            <Col xs="6" sm="4" key={item.id}>
+                                <BookCard book={item.book} item={item} handleSubtract={this.handleSubtract} handleAdd={this.handleAdd} handleDelete={this.handleDelete} />
+                            </Col>
                         );
                     })}
+                    </CardDeck>
                 </div>
                 <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link>
             </div>
