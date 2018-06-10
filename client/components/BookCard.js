@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BookModal from "./BookModal";
 import {
   Card,
   CardImg,
@@ -16,10 +17,11 @@ import {
 const BookCard = props => {
   return (
     <Card body outline color="secondary">
-      <CardBody>
+      <CardBody style={{padding: ".5rem"}}>
         <CardTitle>{props.book.title}</CardTitle>
-        <CardSubtitle>{props.book.author}</CardSubtitle>
+        <CardSubtitle>by {props.book.author}</CardSubtitle>
       </CardBody>
+      <BookModal book={props.book} addToCart={props.handleClick}/>
       <CardBody>
         <Link to={`/books/${props.book.id}`}>
           <CardImg
@@ -32,7 +34,7 @@ const BookCard = props => {
         </Link>
         {props.item ? (
           <div>
-            <CardText>Price : ${props.item.price}</CardText>
+            <CardText style={{marginTop: "1rem", marginBottom:".5rem"}}>Price : ${props.item.price}</CardText>
             <CardText>Quantity: {props.item.quantity}</CardText>
             <Button name={props.item.id} onClick={props.handleSubtract} value={props.item.quantity}>-</Button>
             <Button name={props.item.id} onClick={props.handleAdd} value={props.item.quantity}>+</Button>
@@ -41,8 +43,7 @@ const BookCard = props => {
           </div>
         ) : (
           <div>
-          <CardText>{props.book.description}</CardText>
-          <CardText>Price : ${props.book.price}</CardText>
+          <CardText style={{marginTop: "1rem", marginBottom:".5rem"}}>Price : ${props.book.price}</CardText>
           <Button name={props.book.id} onClick={props.handleClick}>
             ADD TO CART
           </Button>
