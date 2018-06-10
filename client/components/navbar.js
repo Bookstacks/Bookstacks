@@ -48,7 +48,7 @@ class MyNavbar extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink href={`/cart/${this.props.userId}`}>
-                  My Cart
+                  My Cart{" "}
                   {this.props.cart.lineItems ? (
                     <Badge color="secondary">
                       {this.props.cart.lineItems.reduce((sumOfItems, item) => {
