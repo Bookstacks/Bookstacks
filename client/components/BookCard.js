@@ -27,13 +27,27 @@ const BookCard = props => {
             width="100%"
             src={props.book.imageUrl}
             alt="Card image cap"
+            className="book-img"
           />
         </Link>
-        <CardText>{props.book.description}</CardText>
-        <CardText>Price : ${props.book.price}</CardText>
-        <Button name={props.book.id} onClick={props.handleClick}>
-          ADD TO CART
-        </Button>
+        {props.item ? (
+          <div>
+            <CardText>Price : ${props.item.price}</CardText>
+            <CardText>Quantity: {props.item.quantity}</CardText>
+            <Button name={props.item.id} onClick={props.handleSubtract} value={props.item.quantity}>-</Button>
+            <Button name={props.item.id} onClick={props.handleAdd} value={props.item.quantity}>+</Button>
+            <br />
+            <Button name={props.item.id} onClick={props.handleDelete}>Remove Item</Button>
+          </div>
+        ) : (
+          <div>
+          <CardText>{props.book.description}</CardText>
+          <CardText>Price : ${props.book.price}</CardText>
+          <Button name={props.book.id} onClick={props.handleClick}>
+            ADD TO CART
+          </Button>
+          </div>
+        )}
       </CardBody>
     </Card>
   );
