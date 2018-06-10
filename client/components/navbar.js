@@ -1,40 +1,77 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
-import AllBooks from './AllBooks'
+import React from "react";
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink
+} from "reactstrap";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import AllBooks from "./AllBooks";
 
+class MyNavbar extends React.Component {
+  constructor(props) {
+    super(props);
 
-const Navbar = ({ handleClick, isLoggedIn, userId}) => (
-  <div className='nav'>
-    <h1 className='title'>Bookstacks</h1>
-    <nav>
-      <div className="nav-item">
-        <Link to='/allbooks'>Books</Link>
-        <Link to={`/cart/${userId}`}>My Cart</Link>
+    this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.state = {
+      collapsed: true
+    };
+  }
+
+  toggleNavbar() {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
+  render() {
+    return (
+      <div>
+        <Navbar color="light" light>
+          <NavbarBrand href="/allbooks" className="mr-auto">
+            Bookstacks
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+          <Collapse isOpen={!this.state.collapsed} navbar>
+            <Nav navbar>
+              <NavItem>
+                <NavLink href={`/cart/${this.props.userId}`}>My Cart</NavLink>
+              </NavItem>
+              {this.props.isLoggedIn ? (
+                <div>
+                  <NavItem>
+                    <NavLink href="/home">Home</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#" onClick={this.props.handleClick}>
+                      Logout
+                    </NavLink>
+                  </NavItem>
+                </div>
+              ) : (
+                <div>
+                  <NavItem>
+                    <NavLink href="/login">Login</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="/signup">Sign Up</NavLink>
+                  </NavItem>
+                </div>
+              )}
+            </Nav>
+          </Collapse>
+        </Navbar>
       </div>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home" className="nav-item">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div className="nav-right">
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login" className="nav-item nav-item-right">Login</Link>
-          <Link to="/signup" className="nav-item nav-item-right">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+    );
+  }
+}
 
-//Allbooks component is added to render functionality. Make a route / move to other component later. 
+//Allbooks component is added to render functionality. Make a route / move to other component later.
 
 /**
  * CONTAINER
@@ -43,18 +80,21 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     userId: state.user.id
-  }
-}
+  };
+};
 
 const mapDispatch = dispatch => {
   return {
     handleClick() {
-      dispatch(logout())
+      dispatch(logout());
     }
-  }
-}
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(
+  mapState,
+  mapDispatch
+)(MyNavbar);
 
 /**
  * PROP TYPES
@@ -62,4 +102,4 @@ export default connect(mapState, mapDispatch)(Navbar)
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
-}
+};
