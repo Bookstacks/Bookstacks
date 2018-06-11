@@ -4,37 +4,37 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const GET_ORDER = 'GET_ORDER'
+const GET_ORDERS = 'GET_ORDERS'
 
 
 /**
  * INITIAL STATE
  */
-const defaultOrder = {}
+const defaultOrders = []
 
 /**
  * ACTION CREATORS
  */
-const getOrder = order => ({type: GET_ORDER, order})
+const getOrders = orders => ({type: GET_ORDERS, orders})
 
 /**
  * THUNK CREATORS
  */
-export const fetchOrder = (userId) =>
+export const fetchOrders = (userId) =>
   dispatch =>
     axios.get(`/api/order/${userId}`)
       .then(res =>
-        dispatch(getOrder(res.data)))
+        dispatch(getOrders(res.data)))
       .catch(err => console.error(err))
 
 
 /**
  * REDUCER
  */
-export default function (state = defaultOrder, action) {
+export default function (state = defaultOrders, action) {
   switch (action.type) {
-    case GET_ORDER:
-      return action.order
+    case GET_ORDERS:
+      return action.orders
     default:
       return state
   }
