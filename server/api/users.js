@@ -29,14 +29,14 @@ router.delete('/:userId', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next)=>{
-  // if (req.user.admin) {
+  if (req.user.admin) {
     console.log(req.body)
     User.update(req.body, {returning: true, where:{id: req.params.userId}})
       .then(([numOfRowsUpdated, [updatedUser]])=>{
         res.json(updatedUser);
       })
-  // }
-  // else {
-  //   res.sendStatus(403)
-  // }
+  }
+  else {
+    res.sendStatus(403)
+  }
 })
