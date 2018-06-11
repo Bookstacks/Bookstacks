@@ -28,6 +28,14 @@ router.delete('/:userId', (req, res, next) => {
   }
 })
 
+router.delete('/guest/:userId', (req, res, next) => {
+    User.findById(req.params.userId)
+      .then(user =>{ 
+        if (user) user.destroy()
+        else res.sendStatus(403)
+      })
+})
+
 router.put('/:userId', (req, res, next)=>{
   if (req.user.admin) {
     console.log(req.body)

@@ -44,8 +44,7 @@ export const auth = (email, password, method) =>
       .then(res => {
         dispatch(getUser(res.data))
         const guestUserId = localStorage.userId
-        console.log('userId to delete : ', guestUserId)
-        axios.delete((`/user/${guestUserId}`))
+        axios.delete((`api/users/guest/${guestUserId}`))
         localStorage.clear()
         history.push('/home')
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
