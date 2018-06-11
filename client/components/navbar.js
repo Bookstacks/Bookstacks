@@ -12,28 +12,40 @@ import {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store";
 import AllBooks from "./AllBooks";
-import { fetchCart } from "../store";
+import { fetchCart, logout } from "../store";
 
 class MyNavbar extends React.Component {
   constructor(props) {
     super(props);
-
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true
-    };
+      collapsed: true, 
+     };
+  }
+  componentDidMount(){
+    if (!localStorage.getItem('sessionId') || !localStorage.getItem('userId') || localStorage.getItem('sessionId') === 'undefined' || localStorage.getItem('userId') === 'undefined') {
+      localStorage.setItem('sessionId', '');
+      localStorage.setItem('userId', '');
+    }
+    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
+    this.props.loadCart(+userId);
   }
 
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
     });
-    this.props.loadCart(this.props.userId);
+    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
+    this.props.loadCart(+userId);
   }
+
   render() {
-    console.log(this.props.cart.lineItems);
+    if (!localStorage.getItem('sessionId') || !localStorage.getItem('userId') || localStorage.getItem('sessionId') === 'undefined' || localStorage.getItem('userId') === 'undefined') {
+      localStorage.setItem('sessionId', this.props.user.sessionId);
+      localStorage.setItem('userId', this.props.user.id);
+    }
+    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
     return (
       <div>
         <Navbar color="light" light>
@@ -47,7 +59,7 @@ class MyNavbar extends React.Component {
                 <NavLink href="/allbooks">Books</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href={`/cart/${this.props.userId}`}>
+                <NavLink href={`/cart/${userId}`}>
                   My Cart{" "}
                   {this.props.cart.lineItems ? (
                     <Badge color="secondary">
@@ -95,21 +107,21 @@ class MyNavbar extends React.Component {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id,
-    userId: state.user.id,
+    isLoggedIn: !!state.user.email,
+    user: state.user,
     cart: state.cart
   };
 };
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
+    handleClick : () => {
       dispatch(logout());
     },
     loadCart: userId => {
       dispatch(fetchCart(userId));
-    }
-  };
+    }, 
+ };
 };
 
 export default connect(

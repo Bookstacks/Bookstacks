@@ -12,6 +12,7 @@ import Payment from "./components/Payment";
  * COMPONENT
  */
 class Routes extends Component {
+
   componentDidMount () {
     this.props.loadInitialData()
   }
@@ -27,6 +28,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/books/:id" component={SingleBook} />
         <Route exact path="/cart/:userId" component={Cart} />
+        <Route path = '/' component={ AllBooks } />
         {
           isLoggedIn &&
             <Switch>
@@ -37,7 +39,6 @@ class Routes extends Component {
             </Switch>
         }
         {/* Displays our Login component as a fallback */}
-        <Route component={AllBooks} />
       </Switch>
     )
   }

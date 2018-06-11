@@ -6,7 +6,7 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isEmail: true
     }
@@ -28,6 +28,9 @@ const User = db.define('user', {
     }
   },
   googleId: {
+    type: Sequelize.STRING
+  },
+  sessionId : {
     type: Sequelize.STRING
   }
 })

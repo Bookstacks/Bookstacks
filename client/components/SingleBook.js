@@ -20,7 +20,7 @@ class SingleBook extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    const userId = this.props.userId;
+    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
     const bookId = +this.props.book.id;
     this.props.addBook(userId, bookId);
   }
@@ -68,7 +68,7 @@ class SingleBook extends Component {
 const mapStateToProps = state => {
   return {
     book: state.singleBook,
-    userId: state.user.id,
+    user: state.user,
     reviews: state.reviews
   };
 };

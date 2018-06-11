@@ -148,7 +148,7 @@ var books = [
 
 ]
 
-const syncDb = () => db.sync()
+const syncDb = () => db.sync({force : true})
     .then(() => {
         return Bluebird.map(books, book => {
             return Book.create(book)

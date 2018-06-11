@@ -7,7 +7,7 @@ module.exports = router;
 router.get("/:userId", (req, res) => {
   Order.findOne({
     where: {
-      userId: req.params.userId,
+      userId: +req.params.userId,
       isCart: true
     },
     include: [{
@@ -42,7 +42,6 @@ router.post("/:userId/:bookId", (req, res) => {
                 })
                 .then(lineItem => {
                   if (!lineItem) {
-                    
                     LineItem.create({
                       bookId: book.id,
                       orderId: order.id,
@@ -50,9 +49,10 @@ router.post("/:userId/:bookId", (req, res) => {
                       quantity: 1
                     })
                   } else {
-                    lineItem.update({
-                      quantity: Sequelize.literal("quantity + 1")
-                    })
+                    lineItem.increment(['quantity'], {by : 1})
+                    // lineItem.update({
+                    //   quantity: Sequelize.literal("quantity + 1")
+                    // })
                   }
                 })
                 .then(cart => {
@@ -69,8 +69,8 @@ router.post("/:userId/:bookId", (req, res) => {
 
 router.put('/:lineItemId', (req, res, next) => {
     let { lineItemId } = req.params;
+    console.log(req.body)
     let increment = req.body.increment;
-  
     LineItem.findById(lineItemId)
     .then(lineItem => {
       return lineItem.increment(['quantity'], {by : increment})

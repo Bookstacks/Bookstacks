@@ -12,3 +12,9 @@ router.get('/', (req, res, next) => {
     .then(users => res.json(users))
     .catch(next)
 })
+
+router.delete('/:userId', (req, res, next) => {
+	console.log(req.params.userId)
+	User.findById(req.params.userId)
+	.then(user => user.status(203).destroy())
+}) 

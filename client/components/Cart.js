@@ -15,33 +15,34 @@ class Cart extends Component {
     }
 
     componentDidMount(){
-        const { userId } = this.props.match.params;
+        const userId = this.props.match.params.userId
         this.props.loadCart(+userId);
     }
 
     handleAdd(ev) {
         ev.preventDefault();
-        const { userId } = this.props.match.params;
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         this.props.updateAndReloadCart(ev.target.name, userId, 1);
     }
 
     handleSubtract(ev) {
         ev.preventDefault();
-        const { userId } = this.props.match.params;
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         const [lineItem] = this.props.cart.lineItems.filter(item => item.id)
         const bookId = ev.target.name;
-        if (lineItem.quantity >=1) this.props.updateAndReloadCart(ev.target.name, userId, -1);  
+        if (lineItem.quantity >=1) this.props.updateAndReloadCart(ev.target.name, userId, -1);
     }
 
     handleDelete(ev) {
         ev.preventDefault();
-        const { userId } = this.props.match.params;
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         this.props.deleteAndReloadCart(ev.target.name, userId);  
     }
 
     render() {
         const {lineItems} = this.props.cart;
-        
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
+
         return lineItems ? (
             <div>
                 <h1>Cart</h1>
@@ -66,7 +67,7 @@ class Cart extends Component {
 const mapStateToProps = state => {
     return {
         cart: state.cart,
-        user: state.user.id
+        user: state.user
     };
 };
 
@@ -80,7 +81,7 @@ const mapDispatchToProps = dispatch => {
         },
         deleteAndReloadCart : (lineItemId, userId) => {
             dispatch(fetchDeletedLineItem(lineItemId, userId))
-        }
+        },
     };
 };
 
