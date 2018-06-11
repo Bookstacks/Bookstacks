@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AllBooks from "./AllBooks";
 import { fetchCart, logout } from "../store";
+import {toast} from 'react-toastify'
 
 class MyNavbar extends React.Component {
   constructor(props) {
@@ -117,6 +118,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick : () => {
       dispatch(logout());
+      toast.error("Bye, We're Sad to See You Go!!", {
+        position: toast.POSITION.TOP_RIGHT
+      });
     },
     loadCart: userId => {
       dispatch(fetchCart(userId));

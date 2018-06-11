@@ -4,6 +4,7 @@ import { fetchBook, fetchAddedItem, fetchReviews } from "../store";
 import BookCard from "./BookCard";
 import ReviewCard from "./Reviews";
 import { Container, Row, Col } from "reactstrap";
+import {toast} from 'react-toastify'
 
 class SingleBook extends Component {
   constructor(props) {
@@ -22,7 +23,9 @@ class SingleBook extends Component {
     event.preventDefault();
     const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
     const bookId = +this.props.book.id;
-    this.props.addBook(userId, bookId);
+    this.props.addBook(userId, bookId); toast.success("Added to Cart!", {
+      position: toast.POSITION.BOTTOM_RIGHT
+    });
   }
 
   render() {
