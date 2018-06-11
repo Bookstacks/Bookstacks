@@ -32,6 +32,10 @@ const User = db.define('user', {
   },
   sessionId : {
     type: Sequelize.STRING
+  },
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
