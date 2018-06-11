@@ -5,20 +5,21 @@ module.exports = router;
 
 
 router.get("/:userId", (req, res) => {
-  Order.findOne({
-    where: {
-      userId: +req.params.userId,
-      isCart: true
-    },
-    include: [{
-        model: LineItem,
-        include: [{
-            model: Book
-        }]
-    }],
-    order : [['lineItems', 'id', 'ASC']],
-  })
-  .then( order => res.send(order));
+
+    Order.findOne({
+      where: {
+        userId: +req.params.userId,
+        isCart: true
+      },
+      include: [{
+          model: LineItem,
+          include: [{
+              model: Book
+          }]
+      }],
+      order : [['lineItems', 'id', 'ASC']],
+    })
+    .then( order => res.send(order));
 });
 
 router.post("/:userId/:bookId", (req, res) => {
