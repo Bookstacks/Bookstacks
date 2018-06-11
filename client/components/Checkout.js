@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchOrder } from "../store";
+import { fetchCart } from "../store";
 import Payment from './Payment';
 import PaymentMade from './PaymentMade';
 import OrderDetail from './OrderDedail';
+import axios from 'axios';
 
 class Checkout extends Component {
     constructor() {
@@ -17,6 +18,7 @@ class Checkout extends Component {
     }
 
     onPay(){
+      axios.put('/api/order/', {orderId : this.props.cart.id})
       this.setState({
         payment: true
       })
@@ -27,19 +29,19 @@ class Checkout extends Component {
           payment: false
         })
         return (
-            this.props.fetchOrder(this.props.user.id)
+            this.props.loadCart(+this.props.user.id)
         )
     }
 
     render() {
-        const items = this.props.order.lineItems
+        const items = this.props.cart.lineItems
         return (
             <div id='confirmation'>
               {
                 this.state.payment ? <PaymentMade /> :
                                      <div>
-                                       <OrderDetail order={this.props.order} />
-                                       <Payment onPay={this.onPay} user={this.props.user} order={this.props.order} CURRENCY={'USD'}/>
+                                       <OrderDetail order={this.props.cart} />
+                                       <Payment onPay={this.onPay} user={this.props.user} order={this.props.cart} CURRENCY={'USD'}/>
                                      </div>
               }
             </div>
@@ -50,14 +52,14 @@ class Checkout extends Component {
   const mapStateToProps = state => {
       return {
           user: state.user,
-          order: state.order
+          cart : state.cart,
       };
   };
 
   const mapDispatchToProps = dispatch => {
       return {
-          fetchOrder(id) {
-              dispatch(fetchOrder(id))
+          loadCart(id) {
+              dispatch(fetchCart(id))
           }
       };
   };

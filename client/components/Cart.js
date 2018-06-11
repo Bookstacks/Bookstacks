@@ -36,7 +36,7 @@ class Cart extends Component {
     handleDelete(ev) {
         ev.preventDefault();
         const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
-        this.props.deleteAndReloadCart(ev.target.name, userId);  
+        this.props.deleteAndReloadCart(ev.target.name, userId);
     }
 
     render() {
@@ -57,7 +57,7 @@ class Cart extends Component {
                     })}
                     </CardDeck>
                 </div>
-                <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link>
+              {this.props.user.email ? <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link> : <Link to='/guestCheckout'><button>PROCEED TO CHECKOUT</button></Link>}
             </div>
         )
         : <div>NO BOOKS ARE IN CART. ADD BOOKS</div>;
@@ -75,7 +75,7 @@ const mapDispatchToProps = dispatch => {
     return {
         loadCart: (userId) => {
             dispatch(fetchCart(userId))
-        }, 
+        },
         updateAndReloadCart : (lineItemId, userId, increment) => {
             dispatch(fetchUpdatedLineItem(lineItemId, userId, increment))
         },

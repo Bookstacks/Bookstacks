@@ -3,7 +3,7 @@ const { Book, Order, LineItem } = require('../db/models')
 module.exports = router
 
 router.put('/', (req, res, next) => {
-    Order.update({ isCart: false }, { where: { orderId: req.body.orderId }, returning: true, plain: true })
+    Order.update({ isCart: false }, { where: { id: req.body.orderId }, returning: true, plain: true })
         .spread((num, order) => {
             res.status(200).send(order)
         })
@@ -15,3 +15,4 @@ router.get('/:id', (req, res, next) => {
         .then(order => res.json(order))
         .catch(next)
 })
+
