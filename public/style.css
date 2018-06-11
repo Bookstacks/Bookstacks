@@ -57,7 +57,7 @@ button{
   flex-direction: row;
   justify-content: center;
 }
-
+/*
 nav {
   display: flex;
   flex-direction: row;
@@ -76,7 +76,7 @@ nav {
   margin-top: 10px;
   margin-bottom: 10px;
   box-shadow: 2px 4px black;
-  /* transition: all .2s; */
+  transition: all .2s;
 }
 .nav-right {
   display: flex;
@@ -92,5 +92,5 @@ nav {
   box-shadow: 1.5px 2px 3px inset black;
 }
 
-
+*/
 

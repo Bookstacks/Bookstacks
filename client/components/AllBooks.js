@@ -15,13 +15,17 @@ class AllBooks extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount(){
+    this.props.loadAllBooks();
+  }
+
   handleChange(event) {
     this.setState({ inputValue: event.target.value });
   }
 
   handleClick(event) {
     event.preventDefault();
-    const userId = this.props.userId;
+    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
     const bookId = +event.target.name;
     this.props.addBook(userId, bookId);
   }
@@ -70,13 +74,13 @@ class AllBooks extends Component {
 const mapStateToProps = state => {
   return {
     books: state.books,
-    userId: state.user.id
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadAllBooks: dispatch(fetchBooks()),
+    loadAllBooks: () => dispatch(fetchBooks()),
     addBook: (userId, bookId) => dispatch(fetchAddedItem(userId, bookId))
   };
 };

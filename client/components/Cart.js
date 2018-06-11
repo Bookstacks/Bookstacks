@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { fetchCart, fetchUpdatedLineItem, fetchDeletedLineItem } from "../store";
+import { CardDeck, Col } from "reactstrap";
+import BookCard from "./BookCard";
 
 class Cart extends Component {
     constructor(){
@@ -13,58 +15,47 @@ class Cart extends Component {
     }
 
     componentDidMount(){
-        const { userId } = this.props.match.params;
+        const userId = this.props.match.params.userId
         this.props.loadCart(+userId);
     }
 
     handleAdd(ev) {
         ev.preventDefault();
-        const { userId } = this.props.match.params;
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         this.props.updateAndReloadCart(ev.target.name, userId, 1);
     }
 
     handleSubtract(ev) {
         ev.preventDefault();
-        const { userId } = this.props.match.params;
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         const [lineItem] = this.props.cart.lineItems.filter(item => item.id)
         const bookId = ev.target.name;
-        if (lineItem.quantity >=1) this.props.updateAndReloadCart(ev.target.name, userId, -1);  
+        if (lineItem.quantity >=1) this.props.updateAndReloadCart(ev.target.name, userId, -1);
     }
 
     handleDelete(ev) {
         ev.preventDefault();
-        const { userId } = this.props.match.params;
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         this.props.deleteAndReloadCart(ev.target.name, userId);  
     }
 
     render() {
         const {lineItems} = this.props.cart;
-        
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
+
         return lineItems ? (
             <div>
                 <h1>Cart</h1>
                 <div>
+                    <CardDeck>
                     {lineItems.map(item => {
                         return (
-                            <div key={item.id}>
-                                <Link to={`/books/${item.book.id}`}>
-                                    <img id="book-img" key={item.book.imageUrl} src={item.book.imageUrl} />
-                                </Link>
-                                <br />
-                                Title : {item.book.title}
-                                <br />
-                                Author : {item.book.author}
-                                <br />
-                                Price : ${item.price}
-                                <br />
-                                Quantity: {item.quantity} 
-                                <button onClick={this.handleSubtract} name={item.id} value={item.quantity}>-</button>
-                                <button onClick={this.handleAdd} name={item.id} value={item.quantity}>+</button>
-                                <br />
-                                <button onClick = {this.handleDelete} name={item.id} >Remove Item</button>
-                            </div>
+                            <Col xs="6" sm="4" key={item.id}>
+                                <BookCard book={item.book} item={item} handleSubtract={this.handleSubtract} handleAdd={this.handleAdd} handleDelete={this.handleDelete} />
+                            </Col>
                         );
                     })}
+                    </CardDeck>
                 </div>
                 <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link>
             </div>
@@ -76,7 +67,7 @@ class Cart extends Component {
 const mapStateToProps = state => {
     return {
         cart: state.cart,
-        user: state.user.id
+        user: state.user
     };
 };
 
@@ -90,7 +81,7 @@ const mapDispatchToProps = dispatch => {
         },
         deleteAndReloadCart : (lineItemId, userId) => {
             dispatch(fetchDeletedLineItem(lineItemId, userId))
-        }
+        },
     };
 };
 
