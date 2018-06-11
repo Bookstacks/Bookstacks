@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import {Link, Redirect} from "react-router-dom";
-import {fetchOrder} from "../store";
 import StripeCheckout from 'react-stripe-checkout';
 import {PAYMENT_SERVER_URL, STRIPE_PUBLISHABLE} from "../constants";
+import axios from 'axios';
 
 export default class extends Component {
   constructor() {
@@ -33,41 +31,35 @@ export default class extends Component {
   fromDollarToCent = amount => amount * 100;
 
   onToken = (amount, description) => token => {
-    // fetch('PAYMENT_SERVER_URL', {
-    //   method: 'POST',
-    //   body: JSON.stringify(token),
-    // }).then(response => {
-    //   response.json().then(data => {
-    //     alert(`We are in business, ${data.email}`);
-    //   });
-    // });
-
     axios.post(PAYMENT_SERVER_URL,
       {
         description,
-        source: token.id,
+        source: token,
         currency: this.props.CURRENCY,
-        amount: this.fromEuroToCent(amount)
+        amount,
       })
-      .then(this.successPayment)
+      .then(res => {
+        console.log(res)
+      })
+      .then(this.props.onPay)
       .catch(this.errorPayment);
   }
 
   render() {
     const items = this.props.order.lineItems;
+    const total = items ? this.fromDollarToCent(this.calculateTotal(items)) : 0;
     return (
       <div>
         <h1>Inside Payment Component</h1>
         <StripeCheckout
-          amount={items ? this.fromDollarToCent(this.calculateTotal(items)) : 0}
-          name={'Bookstack'}
+          amount={total}
+          name={'BOOKSTACK'}
           image={'bookOneImg.svg'}
           currency={this.props.CURRENCY}
           shippingAddress
           billingAddress
           zipCode
-          token={this.onToken}
-          closed={this.props.onPay}
+          token={this.onToken(total, 'Only Books')}
           stripeKey={STRIPE_PUBLISHABLE}
         />
       </div>
