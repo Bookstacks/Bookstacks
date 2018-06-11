@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout, fetchBook, fetchAddedItem } from "../store";
-import axios from "axios";
+import { fetchBook, fetchAddedItem, fetchReviews } from "../store";
 import BookCard from "./BookCard";
+import ReviewCard from "./Reviews";
 import { Container, Row, Col } from "reactstrap";
 
 class SingleBook extends Component {
@@ -30,15 +28,38 @@ class SingleBook extends Component {
   render() {
     // all properties in books: title, author, genre, description, price, imageUrl
     const book = this.props.book;
+    const filteredReviews = this.props.reviews.filter(
+      review => review.bookId === book.id
+    );
     return (
       <div>
         <Container>
-          <Row>
+          <Row style={{justifyContent: 'center'}}>
             <Col xs="6" sm="4">
               <BookCard book={book} handleClick={this.handleClick} />
             </Col>
           </Row>
         </Container>
+        <div>
+          <h2>Reviews</h2>
+        </div>
+        {filteredReviews.length ? (
+          filteredReviews.map(review => {
+            return (
+              <Container key={review.id}>
+                <Row>
+                  <Col sm="12" md={{ size: 8, offset: 2 }}>
+                    <ReviewCard review={review} />
+                  </Col>
+                </Row>
+              </Container>
+            );
+          })
+        ) : (
+          <div>
+            <h3>Be the first to leave a review!</h3>
+          </div>
+        )}
       </div>
     );
   }
@@ -47,14 +68,16 @@ class SingleBook extends Component {
 const mapStateToProps = state => {
   return {
     book: state.singleBook,
-    userId: state.user.id
+    userId: state.user.id,
+    reviews: state.reviews
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchBook: id => dispatch(fetchBook(id)),
-    addBook: (userId, bookId) => dispatch(fetchAddedItem(userId, bookId))
+    addBook: (userId, bookId) => dispatch(fetchAddedItem(userId, bookId)),
+    loadAllReviews: dispatch(fetchReviews())
   };
 };
 
