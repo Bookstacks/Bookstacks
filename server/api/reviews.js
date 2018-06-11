@@ -2,6 +2,16 @@ const router = require('express').Router()
 const { Reviews, User } = require('../db/models')
 module.exports = router
 
+router.get('/', (req, res, next) => {
+    Reviews.findAll({
+        include: [{
+            model: User
+        }]
+    })
+      .then(reviews => res.json(reviews))
+      .catch(next)
+  })
+
 router.get('/user/:userId', (req, res, next) => {
   Reviews.findAll({
       where: {
