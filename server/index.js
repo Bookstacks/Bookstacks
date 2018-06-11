@@ -25,6 +25,7 @@ module.exports = app
  * keys as environment variables, so that they can still be read by the
  * Node process on process.env
  */
+
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
@@ -58,6 +59,7 @@ const createApp = () => {
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+  app.use('/api/payment', require('./api/payment'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
@@ -85,6 +87,7 @@ const createApp = () => {
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
 }
+
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)

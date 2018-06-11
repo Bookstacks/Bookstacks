@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import {fetchOrder} from "../store";
 
 export default class extends Component {
 
@@ -29,7 +27,6 @@ export default class extends Component {
               )
             })
           }
-
           </tbody>
         </table>
       </div>
