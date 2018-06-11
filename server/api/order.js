@@ -11,7 +11,7 @@ router.put('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-    Order.findById(req.params.id, {include: [{model: LineItem, include: [{model: Book}]}]})
+    Order.findOne({where: {userId:req.params.id}, include: [{model: LineItem, include: [{model: Book}]}]})
         .then(order => res.json(order))
         .catch(next)
 })
