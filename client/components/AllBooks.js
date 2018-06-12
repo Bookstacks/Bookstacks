@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchBooks, fetchAddedItem } from "../store";
+import { fetchBooks, fetchAddedItem, fetchBook } from "../store";
 import BookCard from "./BookCard";
 import {toast} from 'react-toastify'
 import { Container, Row, Col, Input, FormGroup, Label } from "reactstrap";
@@ -28,10 +28,19 @@ class AllBooks extends Component {
     event.preventDefault();
     const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
     const bookId = +event.target.name;
-    this.props.addBook(userId, bookId);
-    toast.success("Added to Cart!", {
+    const [ selectedBook ] = this.props.books.filter(book => book.id === bookId)
+    
+    if (selectedBook.inventoryQuantity >= 1){
+      this.props.addBook(userId, bookId);
+      toast.success("Added to Cart!", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    }
+    else {
+      toast.error("Sold Out", {
       position: toast.POSITION.BOTTOM_RIGHT
-    });
+      });
+    }
   }
 
   render() {
