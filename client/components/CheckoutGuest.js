@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { fetchCart } from "../store";
 import Payment from './Payment';
 import PaymentMade from './PaymentMade';
-import OrderDetail from './OrderDedail';
+import OrderDetail from './OrderDetail';
 import axios from 'axios';
 
 class CheckoutGuest extends Component {
