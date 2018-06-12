@@ -13,7 +13,7 @@ const Reviews = db.define('review', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            len: [5, 50]
+            len: [2, 50]
         }
     },
     rating: {
@@ -29,7 +29,7 @@ const Reviews = db.define('review', {
        type: Sequelize.TEXT,
        allowNull: false,
        validate: {
-           len: [10, 255]
+           len: [3, 255]
        }
    }
  });

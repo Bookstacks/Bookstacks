@@ -3,14 +3,16 @@ import { connect } from "react-redux";
 import { fetchBook, fetchAddedItem, fetchReviews } from "../store";
 import BookCard from "./BookCard";
 import ReviewCard from "./Reviews";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Collapse, Button, CardBody, Card } from "reactstrap";
 import {toast} from 'react-toastify'
 import ReviewForm from './ReviewForm'
 
 class SingleBook extends Component {
   constructor(props) {
     super(props);
+    this.state = { collapse: false };
     this.handleClick = this.handleClick.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +31,12 @@ class SingleBook extends Component {
     });
   }
 
+  toggle() {
+    this.setState({ collapse: !this.state.collapse });
+  }
+
+
+
   render() {
     // all properties in books: title, author, genre, description, price, imageUrl
     const book = this.props.book;
@@ -45,7 +53,7 @@ class SingleBook extends Component {
           </Row>
         </Container>
         <div>
-          <h2>Reviews</h2>
+          <h2  className="title">Reviews</h2>
         </div>
         {filteredReviews.length ? (
           filteredReviews.map(review => {
@@ -64,13 +72,23 @@ class SingleBook extends Component {
             <h3>Be the first to leave a review!</h3>
           </div>
         )}
+        <div>
+          <h4 className="title" style={{ marginTop: '30px'}}>Bought this book? Please write a review!</h4>
         <Container>
-        <Row style={{flexWrap: "unset"}}>
+        <Button  color="primary" onClick={this.toggle} style={{marginBottom: '1rem' }}>Review Form</Button>
+        <Collapse isOpen={this.state.collapse}>
+          <Card>
+            <CardBody>
+        <Row style={{flexWrap: "unset", marginTop: '30px'}}>
           <Col sm="12" md={{ size: 8, offset: 2 }}>
-            <ReviewForm />
+            <ReviewForm bookId={book.id} userId={this.props.user.id} />
           </Col>
         </Row>
+        </CardBody>
+        </Card>
+        </Collapse>
         </Container>
+        </div>
       </div>
     );
   }
