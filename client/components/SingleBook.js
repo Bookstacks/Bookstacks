@@ -5,6 +5,7 @@ import BookCard from "./BookCard";
 import ReviewCard from "./Reviews";
 import { Container, Row, Col } from "reactstrap";
 import {toast} from 'react-toastify'
+import ReviewForm from './ReviewForm'
 
 class SingleBook extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SingleBook extends Component {
     event.preventDefault();
     const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
     const bookId = +this.props.book.id;
-    this.props.addBook(userId, bookId); toast.success("Added to Cart!", {
+    this.props.addBook(userId, bookId); toast.success(`${this.props.book.title} Added to Cart!`, {
       position: toast.POSITION.BOTTOM_RIGHT
     });
   }
@@ -63,6 +64,13 @@ class SingleBook extends Component {
             <h3>Be the first to leave a review!</h3>
           </div>
         )}
+        <Container>
+        <Row style={{flexWrap: "unset"}}>
+          <Col sm="12" md={{ size: 8, offset: 2 }}>
+            <ReviewForm />
+          </Col>
+        </Row>
+        </Container>
       </div>
     );
   }
