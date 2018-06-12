@@ -2,11 +2,18 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Reviews = db.define('review', {
+    userName: {
+        type: Sequelize.STRING,
+        defaultValue: "Anonymous",
+        validate: {
+            len: [2, 12]
+        }
+    },
     title: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            len: [5, 50]
+            len: [2, 50]
         }
     },
     rating: {
@@ -22,7 +29,7 @@ const Reviews = db.define('review', {
        type: Sequelize.TEXT,
        allowNull: false,
        validate: {
-           len: [10, 255]
+           len: [3, 255]
        }
    }
  });
