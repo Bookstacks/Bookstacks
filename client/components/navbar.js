@@ -21,7 +21,7 @@ class MyNavbar extends React.Component {
     super(props);
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true, 
+      collapsed: true,
      };
   }
   componentDidMount(){
@@ -42,6 +42,7 @@ class MyNavbar extends React.Component {
   }
 
   render() {
+    const quotes = ['“Books are mirrors: you only see in them what you already have inside you.” – Carlos Ruiz Zafón in The Shadow of the Wind', '“Books are mirrors: you only see in them what you already have inside you.” – Carlos Ruiz Zafón in The Shadow of the Wind']
     if (!localStorage.getItem('sessionId') || !localStorage.getItem('userId') || localStorage.getItem('sessionId') === 'undefined' || localStorage.getItem('userId') === 'undefined') {
       localStorage.setItem('sessionId', this.props.user.sessionId);
       localStorage.setItem('userId', this.props.user.id);
@@ -51,8 +52,9 @@ class MyNavbar extends React.Component {
       <div>
         <Navbar color="light" light>
           <NavbarBrand tag={Link} to="/allbooks" className="mr-auto">
-            Bookstacks
+            <img src ={'/images/bookstacks-logo.jpg'} id = 'bookstacks-logo' alt = 'bookstacks-logo'/>
           </NavbarBrand>
+          <p id = 'empty-cart'>“I spent all the money I had, to get the sacred books of my life.”<br/>― Lailah Gifty Akita</p>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
