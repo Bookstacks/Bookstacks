@@ -50,17 +50,17 @@ class MyNavbar extends React.Component {
     return (
       <div>
         <Navbar color="light" light>
-          <NavbarBrand href="/allbooks" className="mr-auto">
+          <NavbarBrand tag={Link} to="/allbooks" className="mr-auto">
             Bookstacks
           </NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/allbooks">Books</NavLink>
+                <NavLink tag={Link} to="/allbooks">Books</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href={`/cart/${userId}`}>
+                <NavLink tag={Link} to={`/cart/${userId}`}>
                   My Cart{" "}
                   {this.props.cart.lineItems ? (
                     <Badge color="secondary">
@@ -75,10 +75,10 @@ class MyNavbar extends React.Component {
               {this.props.isLoggedIn ? (
                 <div>
                   <NavItem>
-                    <NavLink href="/home">Home</NavLink>
+                    <NavLink tag={Link} to="/home">Home</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="#" onClick={this.props.handleClick}>
+                    <NavLink tag={Link} to="#" onClick={this.props.handleClick}>
                       Logout
                     </NavLink>
                   </NavItem>
@@ -86,10 +86,10 @@ class MyNavbar extends React.Component {
               ) : (
                 <div>
                   <NavItem>
-                    <NavLink href="/login">Login</NavLink>
+                    <NavLink tag={Link} to="/login">Login</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/signup">Sign Up</NavLink>
+                    <NavLink tag={Link} to="/signup">Sign Up</NavLink>
                   </NavItem>
                 </div>
               )}
