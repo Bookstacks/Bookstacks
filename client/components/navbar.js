@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AllBooks from "./AllBooks";
 import { fetchCart, logout } from "../store";
+import {toast} from 'react-toastify'
 
 class MyNavbar extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class MyNavbar extends React.Component {
     return (
       <div>
         <Navbar color="light" light>
-          <NavbarBrand href="/allbooks" className="mr-auto">
+          <NavbarBrand tag={Link} to="/allbooks" className="mr-auto">
             <img src ={'/images/bookstacks-logo.jpg'} id = 'bookstacks-logo' alt = 'bookstacks-logo'/>
           </NavbarBrand>
           <p id = 'empty-cart'>“I spent all the money I had, to get the sacred books of my life.”<br/>― Lailah Gifty Akita</p>
@@ -58,10 +59,10 @@ class MyNavbar extends React.Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/allbooks">Books</NavLink>
+                <NavLink tag={Link} to="/allbooks">Books</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href={`/cart/${userId}`}>
+                <NavLink tag={Link} to={`/cart/${userId}`}>
                   My Cart{" "}
                   {this.props.cart.lineItems ? (
                     <Badge color="secondary">
@@ -76,10 +77,10 @@ class MyNavbar extends React.Component {
               {this.props.isLoggedIn ? (
                 <div>
                   <NavItem>
-                    <NavLink href="/home">Home</NavLink>
+                    <NavLink tag={Link} to="/home">Home</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="#" onClick={this.props.handleClick}>
+                    <NavLink tag={Link} to="#" onClick={this.props.handleClick}>
                       Logout
                     </NavLink>
                   </NavItem>
@@ -87,10 +88,10 @@ class MyNavbar extends React.Component {
               ) : (
                 <div>
                   <NavItem>
-                    <NavLink href="/login">Login</NavLink>
+                    <NavLink tag={Link} to="/login">Login</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/signup">Sign Up</NavLink>
+                    <NavLink tag={Link} to="/signup">Sign Up</NavLink>
                   </NavItem>
                 </div>
               )}
@@ -119,6 +120,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick : () => {
       dispatch(logout());
+      toast.error("Bye, We're Sad to See You Go!!", {
+        position: toast.POSITION.TOP_RIGHT
+      });
     },
     loadCart: userId => {
       dispatch(fetchCart(userId));

@@ -8,11 +8,9 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  Button,
-  Container,
-  Col,
-  Row
+  Button
 } from "reactstrap";
+
 
 const BookCard = props => {
   return (

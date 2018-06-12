@@ -1,6 +1,15 @@
 body {
+<<<<<<< HEAD
   font-family: 'Slabo 27px', serif !important;
   margin: 0;
+=======
+  font-family: sans-serif;
+}
+
+.background-color {
+  background-color: #c0deed;
+  
+>>>>>>> master
 }
 
 a {
