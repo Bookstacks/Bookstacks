@@ -13,9 +13,12 @@ const AdminCard = (props) => {
         <CardBody>
           <CardTitle>View All {props.title}</CardTitle>
           <CardText>Click below to see all {props.title}.</CardText>
+          {(props.title==='Products')?<Link to={`/allbooks`}>
+            <Button>View All {props.title}</Button>
+          </Link>:
           <Link to={`/admin/${props.title}`}>
             <Button>View All {props.title}</Button>
-          </Link>
+          </Link>}
         </CardBody>
       </Card>
     </div>
