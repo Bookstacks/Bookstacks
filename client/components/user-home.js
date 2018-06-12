@@ -11,14 +11,18 @@ export const UserHome = (props) => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      {/* <h3>Welcome, {email}</h3> */}
       <Link to = "/order"> Past Orders </Link>
     {
       props.isAdmin ? (
-        <Admin />
+        <div>
+            <h3>Welcome, {email}</h3>
+            <Admin />
+          </div>
+        
       ) : (
           <div>
-            <h3>Welcome, Regular User{email}</h3>
+            <h3>Welcome, {email}</h3>
           </div>
         )
     }
