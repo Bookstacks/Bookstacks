@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Admin from './Admin'
-
+import { Link } from "react-router-dom";
 /**
  * COMPONENT
  */
@@ -12,6 +12,7 @@ export const UserHome = (props) => {
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <Link to = "/order"> Past Orders </Link>
     {
       props.isAdmin ? (
         <Admin />

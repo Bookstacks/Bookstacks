@@ -16,7 +16,7 @@ const BookCard = props => {
   return (
     <Card body outline color="secondary">
       <CardBody style={{padding: ".5rem"}}>
-        <CardTitle>{props.book.title}</CardTitle>
+        <CardTitle id = 'card-title'>{props.book.title}</CardTitle>
         <CardSubtitle>by {props.book.author}</CardSubtitle>
       </CardBody>
       <BookModal book={props.book} addToCart={props.handleClick}/>

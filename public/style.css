@@ -1,15 +1,10 @@
 body {
-<<<<<<< HEAD
   font-family: 'Slabo 27px', serif !important;
   margin: 0;
-=======
-  font-family: sans-serif;
 }
 
 .background-color {
   background-color: #c0deed;
-  
->>>>>>> master
 }
 
 a {
@@ -17,12 +12,17 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3{
+h1, h2, h3, h3, p{
   margin: 1.5em !important;
+  text-align: center;
 }
 
 label {
   display: block;
+}
+
+.search-by-title{
+  margin: 1.5em;
 }
 
 nav a {
@@ -69,6 +69,9 @@ button{
   text-align: center;
   margin : 0.5em;
 }
+#card-title: {
+  text-align : left;
+}
 
 .title {
   display: flex;
@@ -77,7 +80,7 @@ button{
 }
 
 #bookstacks-logo{
-  width: 300px;
+  width: 250px;
 }
 
 #empty-cart{
@@ -88,6 +91,9 @@ button{
   margin: 0.8em;
 }
 
+.navbar{
+  box-shadow: 1 1 4px 4px #0040FF; ;
+}
 /*
 
 nav {
