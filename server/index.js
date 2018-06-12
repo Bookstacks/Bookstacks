@@ -14,6 +14,7 @@ const socketio = require('socket.io')
 
 const Book = require('./db/models/book');
 const Bluebird = require('bluebird')
+const {User} = require('../server/db/models')
 
 module.exports = app
 
@@ -156,7 +157,10 @@ const syncDb = () => db.sync({force : true})
         return Bluebird.map(books, book => {
             return Book.create(book)
         })
+    .then(()=>{
+      return User.create({email: 'admin@admin.com', password: 'admin', admin:true})
     })
+})
 
 
 // This evaluates as true when this file is run directly from the command line,
