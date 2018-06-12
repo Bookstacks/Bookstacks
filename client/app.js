@@ -1,8 +1,8 @@
 import React from 'react'
-import {Navbar} from './components'
+import {Navbar, Footer} from './components'
 import Routes from './routes'
 import { ToastContainer } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -10,6 +10,7 @@ const App = () => {
       <Navbar />
       <Routes />
       <ToastContainer autoClose={3000} />
+      <Footer />
     </div>
   )
 }
