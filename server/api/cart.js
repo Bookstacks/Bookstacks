@@ -51,9 +51,6 @@ router.post("/:userId/:bookId", (req, res) => {
                     })
                   } else {
                     lineItem.increment(['quantity'], {by : 1})
-                    // lineItem.update({
-                    //   quantity: Sequelize.literal("quantity + 1")
-                    // })
                   }
                 })
                 .then(cart => {

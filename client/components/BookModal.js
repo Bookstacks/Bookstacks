@@ -51,22 +51,3 @@ class BookModal extends React.Component {
 }
 
 export default BookModal;
-// const mapStateToProps = state => {
-//   return {
-//     userId: state.user.id,
-//     modal: state.modal
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch,ownProps) => {
-//   return {
-//     fetchBook: id => dispatch(fetchBook(id)),
-//     dispatchToggle: stateOfModal => dispatch(showModal(!stateOfModal)),
-//     ...ownProps
-//   };
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(BookModal);

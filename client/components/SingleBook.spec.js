@@ -36,6 +36,5 @@ describe('SingleBook', () => {
 
   it('renders book title', () => {
   	expect((singleBook.find('CardTitle').text()).to.be.equal(`by ${book.title}`))
-    // expect(singleBook.find('h3').text()).to.be.equal('Welcome, cody@email.com')
   })
 })
