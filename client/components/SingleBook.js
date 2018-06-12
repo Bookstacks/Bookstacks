@@ -3,39 +3,57 @@ import { connect } from "react-redux";
 import { fetchBook, fetchAddedItem, fetchReviews } from "../store";
 import BookCard from "./BookCard";
 import ReviewCard from "./Reviews";
-import { Container, Row, Col, Collapse, Button, CardBody, Card } from "reactstrap";
-import {toast} from 'react-toastify'
-import ReviewForm from './ReviewForm'
+import {
+  Container,
+  Row,
+  Col,
+  Collapse,
+  Button,
+  CardBody,
+  Card
+} from "reactstrap";
+import { toast } from "react-toastify";
+import ReviewForm from "./ReviewForm";
 
 class SingleBook extends Component {
   constructor(props) {
     super(props);
-    this.state = { collapse: false };
+    this.state = { 
+      reviews: false,
+      reviewForm: false
+    };
     this.handleClick = this.handleClick.bind(this);
-    this.toggle = this.toggle.bind(this);
+    this.toggleReviews = this.toggleReviews.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
   }
 
   componentDidMount() {
     const id = this.props.match.url.slice(
       this.props.match.url.lastIndexOf("/") + 1
     );
-    return this.props.fetchBook(id);
+    this.props.fetchBook(id);
+    this.props.loadAllReviews();
   }
 
   handleClick(event) {
     event.preventDefault();
-    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
+    const userId = this.props.user.email
+      ? this.props.user.id
+      : localStorage.getItem("userId");
     const bookId = +this.props.book.id;
-    this.props.addBook(userId, bookId); toast.success(`${this.props.book.title} Added to Cart!`, {
+    this.props.addBook(userId, bookId);
+    toast.success(`${this.props.book.title} Added to Cart!`, {
       position: toast.POSITION.BOTTOM_RIGHT
     });
   }
 
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
+  toggleReviews() {
+    this.setState({ reviews: !this.state.reviews });
   }
 
-
+  toggleForm(){
+    this.setState({ reviewForm: !this.state.reviewForm });
+  }
 
   render() {
     // all properties in books: title, author, genre, description, price, imageUrl
@@ -46,48 +64,76 @@ class SingleBook extends Component {
     return (
       <div>
         <Container>
-          <Row style={{justifyContent: 'center'}}>
+          <Row style={{ justifyContent: "center" }}>
             <Col xs="6" sm="4">
               <BookCard book={book} handleClick={this.handleClick} />
             </Col>
           </Row>
         </Container>
         <div>
-          <h2  className="title">Reviews</h2>
+          <h2 className="title">Reviews</h2>
         </div>
         {filteredReviews.length ? (
-          filteredReviews.map(review => {
-            return (
-              <Container key={review.id}>
-                <Row>
-                  <Col sm="12" md={{ size: 8, offset: 2 }}>
-                    <ReviewCard review={review} />
-                  </Col>
-                </Row>
-              </Container>
-            );
-          })
+          <div>
+            <Button
+              name='reviews'
+              color="primary"
+              onClick={this.toggleReviews}
+              style={{ marginBottom: "1rem" }}
+            >
+              See {`${filteredReviews.length}`} Reviews
+            </Button>
+            <Collapse isOpen={this.state.reviews}>
+              <Card>
+                <CardBody style={{backgroundColor: '#c0deed'}}>
+                  {filteredReviews.map(review => {
+                    return (
+                      <Container key={review.id}>
+                        <Row style={{ marginTop: "25px" }}>
+                          <Col sm="12" md={{ size: 8, offset: 2 }}>
+                            <ReviewCard review={review} />
+                          </Col>
+                        </Row>
+                      </Container>
+                    );
+                  })}
+                </CardBody>
+              </Card>
+            </Collapse>
+          </div>
         ) : (
           <div>
             <h3>Be the first to leave a review!</h3>
           </div>
         )}
         <div>
-          <h4 className="title" style={{ marginTop: '30px'}}>Bought this book? Please write a review!</h4>
-        <Container>
-        <Button  color="primary" onClick={this.toggle} style={{marginBottom: '1rem' }}>Review Form</Button>
-        <Collapse isOpen={this.state.collapse}>
-          <Card>
-            <CardBody>
-        <Row style={{flexWrap: "unset", marginTop: '30px'}}>
-          <Col sm="12" md={{ size: 8, offset: 2 }}>
-            <ReviewForm bookId={book.id} userId={this.props.user.id} />
-          </Col>
-        </Row>
-        </CardBody>
-        </Card>
-        </Collapse>
-        </Container>
+          <h4 className="title" style={{ marginTop: "30px" }}>
+            Bought this book? Please write a review!
+          </h4>
+          <Container>
+            <Button
+              name='reviewForm'
+              color="primary"
+              onClick={this.toggleForm}
+              style={{ marginBottom: "1rem" }}
+            >
+              Review Form
+            </Button>
+            <Collapse isOpen={this.state.reviewForm}>
+              <Card>
+                <CardBody style={{backgroundColor: '#c0deed'}}>
+                  <Row style={{ flexWrap: "unset", marginTop: "30px" }}>
+                    <Col sm="12" md={{ size: 8, offset: 2 }}>
+                      <ReviewForm
+                        bookId={book.id}
+                        userId={this.props.user.id}
+                      />
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Collapse>
+          </Container>
         </div>
       </div>
     );
@@ -106,7 +152,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchBook: id => dispatch(fetchBook(id)),
     addBook: (userId, bookId) => dispatch(fetchAddedItem(userId, bookId)),
-    loadAllReviews: dispatch(fetchReviews())
+    loadAllReviews: () => dispatch(fetchReviews())
   };
 };
 

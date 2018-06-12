@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { postReview } from "../store";
+import { toast } from "react-toastify";
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class ReviewFrom extends Component {
@@ -22,9 +23,14 @@ class ReviewFrom extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        
-        console.log({...this.state, bookId: this.props.bookId, userId: this.props.userId})
         this.props.submitReview({...this.state, bookId: this.props.bookId, userId: +this.props.userId})
+        toast(`Thanks for leaving a review!`, {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+          this.setState({ title: '',
+          name: '',
+          rating: 1,
+          content: ''})
     }
 
 
