@@ -31,6 +31,7 @@ class Routes extends Component {
         <Route exact path="/books/:id" component={SingleBook} />
         <Route exact path="/cart/:userId" component={Cart} />
         <Route exact path="/order/" component={OrderHistory} />
+        
         {
           isLoggedIn &&
             <Switch>
@@ -38,6 +39,7 @@ class Routes extends Component {
               <Route path="/home" component={UserHome} />
               <Route path="/checkout" component={Checkout} />
               <Route path="/payment" component={Payment} />
+              <Route path="/admin/orders" component={OrderHistory} />
             </Switch>
         }
         {/* Displays our Login component as a fallback */}

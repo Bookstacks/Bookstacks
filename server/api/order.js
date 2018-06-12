@@ -11,19 +11,41 @@ router.put('/', (req, res, next) => {
 })
 
 router.get("/:userId", (req, res) => {
-  Order.findAll({
-    where: {
-      userId: +req.params.userId,
-      isCart: false
-    },
-    include: [{
-        model: LineItem,
-        include: [{
-            model: Book
-        }]
-    }],
-    order : [['lineItems', 'id', 'ASC']],
-  })
-  .then( order => res.send(order));
+    if (req.user.id === +req.params.userId || req.user.admin) {
+        Order.findAll({
+            where: {
+                userId: +req.params.userId,
+                isCart: false
+            },
+            include: [{
+                model: LineItem,
+                include: [{
+                    model: Book
+                }]
+            }],
+            order: [['lineItems', 'id', 'ASC']],
+        })
+            .then(order => res.send(order));
+    }
+    else {
+        res.sendStatus(403)
+    }
 });
 
+router.get("/", (req, res) => {
+    if (req.user.admin) {
+        Order.findAll({
+            include: [{
+                model: LineItem,
+                include: [{
+                    model: Book
+                }]
+            }],
+            order: [['lineItems', 'id', 'ASC']],
+        })
+            .then(order => res.send(order));
+    }
+    else {
+        res.sendStatus(403)
+    }
+});

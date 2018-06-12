@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchOrders } from "../store";
+import { fetchOrders, fetchAllOrders } from "../store";
 import BookCard from "./BookCard";
 import AllBooks from './AllBooks'
 import { Container, Row, Col, Input, FormGroup, Label, CardDeck, Jumbotron } from "reactstrap";
@@ -10,7 +10,7 @@ class OrderHistory extends Component {
 
   componentDidMount(){
     const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId');
-    this.props.getPastOrders(+userId);
+    (this.props.user.admin) ? this.props.fetchAllOrders : this.props.getPastOrders(+userId);
   }
 
   render() {
@@ -27,6 +27,7 @@ class OrderHistory extends Component {
                   <Jumbotron>
                       <p className="lead" >Order #{order.id}</p>
                       <p className="lead">Order Placed : {order.updatedAt.slice(0, 10)}</p>
+                      { (this.props.user.admin) ? <p className="lead">Order Placed by User #{order.userId}</p> : null}
                       <hr className="my-2" />
                       <CardDeck>
                       {order.lineItems.map(item => {
@@ -70,6 +71,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getPastOrders: (userId) => dispatch(fetchOrders(userId)),
     fetchBook: id => dispatch(fetchBook(id)),
+    fetchAllOrders: dispatch(fetchAllOrders())
   };
 };
 

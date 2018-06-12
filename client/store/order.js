@@ -15,7 +15,7 @@ const defaultOrders = []
 /**
  * ACTION CREATORS
  */
-const getOrders = orders => ({type: GET_ORDERS, orders})
+const getOrders = orders => ({ type: GET_ORDERS, orders })
 
 /**
  * THUNK CREATORS
@@ -23,6 +23,13 @@ const getOrders = orders => ({type: GET_ORDERS, orders})
 export const fetchOrders = (userId) =>
   dispatch =>
     axios.get(`/api/order/${userId}`)
+      .then(res =>
+        dispatch(getOrders(res.data)))
+      .catch(err => console.error(err))
+
+export const fetchAllOrders = () =>
+  dispatch =>
+    axios.get(`/api/order`)
       .then(res =>
         dispatch(getOrders(res.data)))
       .catch(err => console.error(err))

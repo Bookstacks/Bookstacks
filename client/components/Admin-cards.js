@@ -1,6 +1,9 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody,
-  CardTitle, Button } from 'reactstrap';
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, Button
+} from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 const AdminCard = (props) => {
   return (
@@ -10,7 +13,9 @@ const AdminCard = (props) => {
         <CardBody>
           <CardTitle>View All {props.title}</CardTitle>
           <CardText>Click below to see all {props.title}.</CardText>
-          <Button>View All {props.title}</Button>
+          <Link to={`/admin/${props.title}`}>
+            <Button>View All {props.title}</Button>
+          </Link>
         </CardBody>
       </Card>
     </div>
