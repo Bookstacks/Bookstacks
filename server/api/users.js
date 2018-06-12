@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.delete('/:userId', (req, res, next) => {
-  if (req.user.admin) {
+  if (req.user.admin || req.user.id===+req.params.id) {
     User.findById(req.params.userId)
       .then(user => user.status(203).destroy())
   }
@@ -37,8 +37,7 @@ router.delete('/guest/:userId', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next)=>{
-  if (req.user.admin) {
-    console.log(req.body)
+  if (req.user.admin || req.user.id===+req.params.id) {
     User.update(req.body, {returning: true, where:{id: req.params.userId}})
       .then(([numOfRowsUpdated, [updatedUser]])=>{
         res.json(updatedUser);

@@ -8,21 +8,8 @@ router.get('/', (req, res, next) => {
             model: User
         }]
     })
-      .then(reviews => res.json(reviews))
-      .catch(next)
-  })
-
-router.get('/user/:userId', (req, res, next) => {
-  Reviews.findAll({
-      where: {
-          userId: req.params.userId
-      },
-      include: [{
-          model: User
-      }]
-  })
-    .then(reviews => res.json(reviews))
-    .catch(next)
+        .then(reviews => res.json(reviews))
+        .catch(next)
 })
 
 router.get('/book/:bookId', (req, res, next) => {
@@ -34,13 +21,12 @@ router.get('/book/:bookId', (req, res, next) => {
             model: User
         }]
     })
-      .then(reviews => res.json(reviews))
-      .catch(next)
-  })
+        .then(reviews => res.json(reviews))
+        .catch(next)
+})
 
 router.post('/', (req, res, next) => {
-    console.log(req.body)
-  Reviews.create(req.body)
-    .then(review => res.status(200).send(review))
-    .catch(next)
+    Reviews.create(req.body)
+        .then(review => res.status(200).send(review))
+        .catch(next)
 })
