@@ -36,12 +36,12 @@ class AllBooks extends Component {
 
   render() {
     const filteredBooks = this.props.books.filter(book =>
-      book.title.match(this.state.inputValue)
+      book.title.toLowerCase().match(this.state.inputValue.toLowerCase())
     );
+
     return (
-      <div>
+      <div className = 'search-by-title'>
         <Col sm="12" md={{ size: 8, offset: 2 }}>
-          <h1 className="title">Available Books</h1>
           <FormGroup row>
             <Label for="serach" sm={2}>
               Search by Title:
