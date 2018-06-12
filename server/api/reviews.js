@@ -38,8 +38,9 @@ router.get('/book/:bookId', (req, res, next) => {
       .catch(next)
   })
 
-// router.post('/', (req, res, next) => {
-//   Reviews.create(req.body)
-//     .then(review => res.status(200).send(review))
-//     .catch(next)
-// })
+router.post('/', (req, res, next) => {
+    console.log(req.body)
+  Reviews.create(req.body)
+    .then(review => res.status(200).send(review))
+    .catch(next)
+})

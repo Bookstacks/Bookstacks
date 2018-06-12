@@ -13,9 +13,7 @@ const ReviewCard = props => {
     <Card body outline color="secondary">
       <CardBody style={{padding: ".5rem"}}>
         <CardTitle>{props.review.title}</CardTitle>
-        <Link to={`/reviews/user/${props.review.userId}`}>
-          <CardSubtitle>Users First Name</CardSubtitle>
-        </Link>
+          <CardSubtitle>{props.review.userName}</CardSubtitle>
       </CardBody>
       <CardBody>
       <CardText>{props.review.content}</CardText>

@@ -1,15 +1,11 @@
 body {
-<<<<<<< HEAD
+
   font-family: 'Slabo 27px', serif !important;
   margin: 0;
-=======
-  font-family: sans-serif;
 }
 
 .background-color {
   background-color: #c0deed;
-  
->>>>>>> master
 }
 
 a {
@@ -35,7 +31,7 @@ nav a {
 }
 
 form div {
-  margin: 1em;
+  /* margin: 1em; */
   display: inline-block;
 }
 
