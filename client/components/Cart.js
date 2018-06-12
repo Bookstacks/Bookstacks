@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { fetchCart, fetchUpdatedLineItem, fetchDeletedLineItem } from "../store";
-import { CardDeck, Col } from "reactstrap";
+import { CardDeck, Col, Button } from "reactstrap";
 import BookCard from "./BookCard";
 
 class Cart extends Component {
@@ -45,7 +45,7 @@ class Cart extends Component {
 
         return lineItems ? (
             <div>
-                <h1>Cart</h1>
+                <h1 className='title' >Cart</h1>
                 <div>
                     <CardDeck>
                     {lineItems.map(item => {
@@ -60,7 +60,10 @@ class Cart extends Component {
               {this.props.user.email ? <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link> : <Link to='/guestCheckout'><button>PROCEED TO CHECKOUT</button></Link>}
             </div>
         )
-        : <div>NO BOOKS ARE IN CART. ADD BOOKS</div>;
+        : 
+        <div>
+            <h1>Add Items to Cart</h1>
+        </div>;
     }
 }
 
