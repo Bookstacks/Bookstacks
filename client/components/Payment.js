@@ -34,7 +34,7 @@ export default class extends Component {
     axios.post(PAYMENT_SERVER_URL,
       {
         description,
-        source: token,
+        source: token.id,
         currency: this.props.CURRENCY,
         amount,
       })
@@ -50,7 +50,14 @@ export default class extends Component {
     const total = items ? this.fromDollarToCent(this.calculateTotal(items)) : 0;
     return (
       <div>
-        <h1>Inside Payment Component</h1>
+        <form id='promoForm'>
+          <label>
+            Promo code:
+            <input type="text" />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+
         <StripeCheckout
           amount={total}
           name={'BOOKSTACK'}
