@@ -8,5 +8,4 @@ const Genre = db.define('genre', {
     }
 })
 
-
 module.exports = Genre;
