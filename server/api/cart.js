@@ -5,80 +5,48 @@ module.exports = router;
 
 
 router.get("/:userId", (req, res) => {
-
-    Order.findOne({
-      where: {
-        userId: +req.params.userId,
-        isCart: true
-      },
-      include: [{
-          model: LineItem,
-          include: [{
-              model: Book
-          }]
-      }],
-      order : [['lineItems', 'id', 'ASC']],
-    })
-    .then( order => res.send(order));
+  Order.findOne({
+    where: {
+      userId: +req.params.userId,
+      isCart: true
+    },
+    include: [{
+        model: LineItem,
+        include: [{
+            model: Book
+        }]
+    }],
+    order : [['lineItems', 'id', 'ASC']],
+  })
+  .then( order => res.send(order));
 });
 
-router.post("/:userId/:bookId", (req, res) => {
+router.post("/:userId/:bookId", async (req, res) => {
   // creates cart order
-  User.findById(req.params.userId) //check if user exists
-    .then(user => {
-      if (user) {
-        Order.findOne({ where: { userId: user.id, isCart: true } }) //if user has a cart order
-          .then(order => {
-            if (!order) return Order.create({ userId: user.id });
-            // create cart order if there is no cart order
-            else return order;
-          })
-          .then(order => {
-            Book.findById(req.params.bookId)
-            .then(book => {
-              //Creates lineitem with bookId and orderId
-              if (book) {
-                LineItem.findOne({
-                  where: { orderId: order.id, bookId: book.id }
-                })
-                .then(lineItem => {
-                  if (!lineItem) {
-                    LineItem.create({
+  const user = await User.findById(req.params.userId) //check if user exists
+  const order = await Order.findOne({where : {userId : user.id, isCart: true}})
+  const cart = order ? order : await Order.create({ userId: user.id })
+  const book = await Book.findById(req.params.bookId)
+  const lineItem = await LineItem.findOne({where: { orderId: cart.id, bookId: book.id}})
+  if (lineItem) await lineItem.increment(['quantity'], {by : 1})
+  else await LineItem.create({
                       bookId: book.id,
-                      orderId: order.id,
+                      orderId: cart.id,
                       price: book.price,
                       quantity: 1
                     })
-                  } else {
-                    lineItem.increment(['quantity'], {by : 1})
-                  }
-                })
-                .then(cart => {
-                  book.decrement(['inventoryQuantity'], {by : 1})
-                  return cart
-                })
-                .then(cart => res.status(202).send(cart));
-              } else res.sendStatus(404);
-            });
-          });
-      } else res.sendStatus(404);
-    });
+  await book.decrement(['inventoryQuantity'], {by : 1})
+  res.status(202).send(cart);
 });
 
-router.put('/:lineItemId', (req, res, next) => {
-    let { lineItemId } = req.params;
-    let increment = req.body.increment;
-    LineItem.findById(lineItemId)
-    .then(lineItem => {
-      return lineItem.increment(['quantity'], {by : increment})
-      .then(item => {
-        Book.findById(lineItem.bookId).then(book => book.decrement(['inventoryQuantity'], {by : increment}))
-        return item;
-      })
-    })
-    .then(lineItem => {
-      res.status(202).json(lineItem.dataValues)})
-    .catch(next);
+router.put('/:lineItemId', async (req, res, next) => {
+    const { lineItemId } = req.params;
+    const increment = req.body.increment;
+    const lineItem = await LineItem.findById(lineItemId)
+    await lineItem.increment(['quantity'], {by : increment});
+    const book = await Book.findById(lineItem.bookId)
+    await book.decrement(['inventoryQuantity'], {by : increment})
+    res.status(202).json(lineItem.dataValues);
 })
 
 router.delete('/:lineItemId', (req, res, next) => {
@@ -90,7 +58,10 @@ router.delete('/:lineItemId', (req, res, next) => {
       return itemInfo;
     })
     .then(itemInfo => {
-        Book.findById(itemInfo.bookId).then(book => book.increment(['inventoryQuantity'], {by : itemInfo.quantity}))
+        Book.findById(itemInfo.bookId)
+        .then(book => book.increment(
+          ['inventoryQuantity'], 
+          {by : itemInfo.quantity}))
     })
     .then(() => res.sendStatus(203))
     .catch(next);

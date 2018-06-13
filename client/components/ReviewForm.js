@@ -69,7 +69,7 @@ class ReviewFrom extends Component {
         </FormGroup>
         <FormGroup check row>
           <Col sm={{ size: 10, offset: 2 }}>
-            <Button>Submit</Button>
+            <Button id = 'review-submit-button' >Submit</Button>
           </Col>
         </FormGroup>
       </Form>

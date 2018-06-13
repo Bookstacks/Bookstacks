@@ -65,6 +65,27 @@ button{
   margin-top: 50px;
 }
 
+.center-button{
+  margin-top : 8px;
+  margin-left : 30%;
+}
+#review-form-button{
+  margin-left: 45% !important;
+}
+#review-submit-button{
+  margin-left: 33%;
+} 
+
+#button-pair{
+  display : flex;
+  justify-content: center;
+}
+
+#add-button {
+    margin-right: 3px;
+    width: 33px;
+}
+
 #confirmation{
   text-align: center;
   margin : 0.5em;
@@ -76,6 +97,12 @@ button{
 .title {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+}
+
+#link-checkout{
+  display : flex;
+  margin-top: 30px;
   justify-content: center;
 }
 

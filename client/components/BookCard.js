@@ -34,15 +34,18 @@ const BookCard = props => {
           <div>
             <CardText style={{marginTop: "1rem", marginBottom:".5rem"}}>Price : ${props.item.price}</CardText>
             <CardText>Quantity: {props.item.quantity}</CardText>
-            <Button name={props.item.id} onClick={props.handleSubtract} value={props.item.quantity}>-</Button>
+            <div id = 'button-pair'>
+            <Button id= 'add-button' name={props.item.id} onClick={props.handleSubtract} value={props.item.quantity}>-</Button>
             <Button name={props.item.id} onClick={props.handleAdd} value={props.item.quantity}>+</Button>
-            <br />
-            <Button name={props.item.id} onClick={props.handleDelete} >Remove Item</Button>
+            </div>
+            <div className='center-button'>
+              <Button name={props.item.id} onClick={props.handleDelete} >Remove Item</Button>
+            </div>
           </div>
         ) : (
           <div>
           <CardText style={{marginTop: "1rem", marginBottom:".5rem"}} >Price : ${props.book.price}</CardText>
-          <Button name={props.book.id} onClick={props.handleClick} >
+          <Button className = 'center-button' name={props.book.id} onClick={props.handleClick} >
             ADD TO CART
           </Button>
           </div>
