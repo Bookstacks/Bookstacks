@@ -33,6 +33,28 @@ class MyNavbar extends React.Component {
     this.props.loadCart(+userId);
   }
 
+  componentDidUpdate(prevProps) {
+    const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
+    let currPropsItem
+    let prevPropsItem
+    if (this.props.cart.lineItems){
+      currPropsItem = this.props.cart.lineItems.reduce((sumOfItems, item) => {
+        sumOfItems += item.quantity;
+        return sumOfItems;
+      }, 0);
+    }
+    if (prevProps.cart.lineItems){
+      prevPropsItem = prevProps.cart.lineItems.reduce((sumOfItems, item) => {
+        sumOfItems += item.quantity;
+        return sumOfItems;
+      }, 0);
+    }
+    
+    if (currPropsItem !== prevPropsItem) {
+      this.props.loadCart(+userId);
+    }
+  }
+
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
@@ -51,7 +73,7 @@ class MyNavbar extends React.Component {
     return (
       <div>
         <Navbar color="light" light>
-          <NavbarBrand tag={Link} to="/allbooks" className="mr-auto">
+          <NavbarBrand onClick={this.toggleNavbar} tag={Link} to="/allbooks" className="mr-auto">
             <img src ={'/images/bookstacks-logo.jpg'} id = 'bookstacks-logo' alt = 'bookstacks-logo'/>
           </NavbarBrand>
           <p id = 'empty-cart'>“I spent all the money I had, to get the sacred books of my life.”<br/>― Lailah Gifty Akita</p>
@@ -59,10 +81,10 @@ class MyNavbar extends React.Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink tag={Link} to="/allbooks">Books</NavLink>
+                <NavLink onClick={this.toggleNavbar} tag={Link} to="/allbooks">Books</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} to={`/cart/${userId}`}>
+                <NavLink onClick={this.toggleNavbar} tag={Link} to={`/cart/${userId}`}>
                   My Cart{" "}
                   {this.props.cart.lineItems ? (
                     <Badge color="secondary">
@@ -77,9 +99,9 @@ class MyNavbar extends React.Component {
               {this.props.isLoggedIn ? (
                 <div>
                   <NavItem>
-                    <NavLink tag={Link} to="/home">Home</NavLink>
+                    <NavLink onClick={this.toggleNavbar} tag={Link} to="/home">Home</NavLink>
                   </NavItem>
-                  <NavItem>
+                  <NavItem onClick={this.toggleNavbar}>
                     <NavLink tag={Link} to="#" onClick={this.props.handleClick}>
                       Logout
                     </NavLink>
@@ -88,10 +110,10 @@ class MyNavbar extends React.Component {
               ) : (
                 <div>
                   <NavItem>
-                    <NavLink tag={Link} to="/login">Login</NavLink>
+                    <NavLink onClick={this.toggleNavbar} tag={Link} to="/login">Login</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} to="/signup">Sign Up</NavLink>
+                    <NavLink onClick={this.toggleNavbar} tag={Link} to="/signup">Sign Up</NavLink>
                   </NavItem>
                 </div>
               )}
@@ -126,7 +148,7 @@ const mapDispatch = dispatch => {
     },
     loadCart: userId => {
       dispatch(fetchCart(userId));
-    }, 
+    } 
  };
 };
 
