@@ -24,8 +24,9 @@ class MyNavbar extends React.Component {
       collapsed: true,
      };
   }
+
   componentDidMount(){
-    if (!localStorage.getItem('sessionId') || !localStorage.getItem('userId') || localStorage.getItem('sessionId') === 'undefined' || localStorage.getItem('userId') === 'undefined') {
+    if (this.hasNoUser()) {
       localStorage.setItem('sessionId', '');
       localStorage.setItem('userId', '');
     }
@@ -54,6 +55,12 @@ class MyNavbar extends React.Component {
     }
   }
 
+  hasNoUser(){
+    const hasNoSession = !localStorage.getItem('sessionId') || localStorage.getItem('sessionId') === 'undefined';
+    const hasNoUser = !localStorage.getItem('userId') || localStorage.getItem('userId') === 'undefined'
+    return hasNoSession || hasNoUser;
+  }
+
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
@@ -63,10 +70,11 @@ class MyNavbar extends React.Component {
   }
 
   render() {
-    if (!localStorage.getItem('sessionId') || !localStorage.getItem('userId') || localStorage.getItem('sessionId') === 'undefined' || localStorage.getItem('userId') === 'undefined') {
+    if (this.hasNoUser()) {
       localStorage.setItem('sessionId', this.props.user.sessionId);
       localStorage.setItem('userId', this.props.user.id);
     }
+
     const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
     return (
       <div>
