@@ -49,7 +49,6 @@ class MyNavbar extends React.Component {
         return sumOfItems;
       }, 0);
     }
-    
     if (currPropsItem !== prevPropsItem) {
       this.props.loadCart(+userId);
     }

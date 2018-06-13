@@ -105,6 +105,22 @@ footer {
 .navbar{
   box-shadow: 1 1 4px 4px #0040FF; ;
 }
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding-top: 50px;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding-top: 50px;
+}
+
 /*
 
 nav {
