@@ -66,9 +66,11 @@ button{
 }
 
 .center-button{
+  display: flex;
   margin-top : 8px;
-  margin-left : 30%;
+  justify-content: center;
 }
+
 #review-form-button{
   margin-left: 45% !important;
 }

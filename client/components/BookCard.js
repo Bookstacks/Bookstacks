@@ -45,9 +45,11 @@ const BookCard = props => {
         ) : (
           <div>
           <CardText style={{marginTop: "1rem", marginBottom:".5rem"}} >Price : ${props.book.price}</CardText>
-          <Button className = 'center-button' name={props.book.id} onClick={props.handleClick} >
-            ADD TO CART
-          </Button>
+            <div className = 'center-button'>
+              <Button name={props.book.id} onClick={props.handleClick} >
+                ADD TO CART
+              </Button>
+            </div>
           </div>
         )}
       </CardBody>

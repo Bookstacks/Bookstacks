@@ -111,15 +111,16 @@ class SingleBook extends Component {
             Bought this book? Please write a review!
           </h4>
           <Container>
-            <Button
-              id='review-form-button'
-              name='reviewForm'
-              color="primary"
-              onClick={this.toggleForm}
-              style={{ marginBottom: "1rem" }}
-            >
-              Review Form
-            </Button>
+            <div className = 'center-button'>
+              <Button
+                name='reviewForm'
+                color="primary"
+                onClick={this.toggleForm}
+                style={{ marginBottom: "1rem" }}
+              >
+                Review Form
+              </Button>
+            </div>
             <Collapse isOpen={this.state.reviewForm}>
               <Card>
                 <CardBody style={{backgroundColor: '#c0deed'}}>
