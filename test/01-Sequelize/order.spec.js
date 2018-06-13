@@ -33,7 +33,6 @@ describe('LineItem model', () => {
             }]
           })
             .then(orderWithLineItem => {
-              console.log(orderWithLineItem.length);
               orderTestProductId = orderWithLineItem.length
             })
         })

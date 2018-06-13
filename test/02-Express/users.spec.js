@@ -3,7 +3,7 @@
 const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../../server/db/db')
-const app = require('../../server/db/index')
+const app = require('../../server/index')
 const User = db.model('user')
 
 describe('User routes', () => {
@@ -11,23 +11,20 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
+  describe('GET /api/users', () => {
     const codysEmail = 'cody@puppybook.com'
 
     beforeEach(() => {
       return User.create({
-        email: codysEmail
+        email: codysEmail,
+        isAdmin: false,
       })
     })
 
-    // it('GET /api/users', () => {
-    //   return request(app)
-    //     .get('/api/users')
-    //     .expect(200)
-    //     .then(res => {
-    //       expect(res.body).to.be.an('array')
-    //       expect(res.body[0].email).to.be.equal(codysEmail)
-    //     })
-    // })
+    it('Secures route if user !== admin', () => {
+      return request(app)
+        .get('/api/users')
+        .expect(403)
+    })
   }) // end describe('/api/users')
 }) // end describe('User routes')
