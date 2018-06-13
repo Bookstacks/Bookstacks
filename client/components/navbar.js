@@ -63,7 +63,6 @@ class MyNavbar extends React.Component {
   }
 
   render() {
-    const quotes = ['“Books are mirrors: you only see in them what you already have inside you.” – Carlos Ruiz Zafón in The Shadow of the Wind', '“Books are mirrors: you only see in them what you already have inside you.” – Carlos Ruiz Zafón in The Shadow of the Wind']
     if (!localStorage.getItem('sessionId') || !localStorage.getItem('userId') || localStorage.getItem('sessionId') === 'undefined' || localStorage.getItem('userId') === 'undefined') {
       localStorage.setItem('sessionId', this.props.user.sessionId);
       localStorage.setItem('userId', this.props.user.id);
