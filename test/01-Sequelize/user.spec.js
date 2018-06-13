@@ -1,11 +1,10 @@
 /* global describe beforeEach it */
 
 const { expect } = require('chai')
-const db = require('../index')
+const db = require('../../server/db/index')
 const User = db.model('user')
 
 
-describe('▒▒▒ Backend tests ▒▒▒', () => {
   beforeEach('Synchronize and clear database', () => db.sync({ force: true }));
 
   after('Synchronize and clear database', () => db.sync({ force: true }));
@@ -66,4 +65,4 @@ describe('▒▒▒ Backend tests ▒▒▒', () => {
       })
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
-}) // end describe('User model')
+ // end describe('User model')

@@ -3,7 +3,7 @@ const { User } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  if (req.user.admin) {
+  if (req.user && req.user.admin) {
     User.findAll({
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just

@@ -20,6 +20,7 @@ const getBooks = books => ({type: GET_BOOKS, books})
 /**
  * THUNK CREATORS
  */
+
 export const fetchBooks = () =>
   dispatch =>
     axios.get('/api/books')
@@ -27,10 +28,10 @@ export const fetchBooks = () =>
         dispatch(getBooks(res.data || defaultBooks)))
       .catch(err => console.log(err))
 
-
 /**
  * REDUCER
  */
+ 
 export default function (state = defaultBooks, action) {
   switch (action.type) {
     case GET_BOOKS:

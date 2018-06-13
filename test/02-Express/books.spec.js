@@ -2,8 +2,8 @@
 
 const {expect} = require('chai')
 const request = require('supertest')
-const db = require('../db')
-const app = require('../index')
+const db = require('../../server/db/db')
+const app = require('../../server/index')
 const Book = db.model('book')
 
 describe('Book routes', () => {
@@ -11,7 +11,7 @@ describe('Book routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/books/', () => {
+  describe('GET /api/books', () => {
 
     beforeEach(() => {
       return Book.create({
@@ -24,7 +24,7 @@ describe('Book routes', () => {
       })
     })
 
-    it('GET /api/books', () => {
+    it('renders books in the database', () => {
       return request(app)
         .get('/api/books')
         .expect(200)

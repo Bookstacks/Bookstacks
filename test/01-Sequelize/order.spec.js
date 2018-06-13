@@ -1,7 +1,7 @@
 /* global describe beforeEach it */
 
 const {expect} = require('chai')
-const db = require('../index')
+const db = require('../../server/db/index')
 const Order = db.model('order')
 const LineItem = db.model('lineItem')
 
@@ -33,7 +33,6 @@ describe('LineItem model', () => {
             }]
           })
             .then(orderWithLineItem => {
-              console.log(orderWithLineItem.length);
               orderTestProductId = orderWithLineItem.length
             })
         })
