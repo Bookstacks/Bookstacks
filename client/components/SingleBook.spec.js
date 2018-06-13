@@ -8,8 +8,11 @@ import {SingleBook} from './SingleBook'
 
 const adapter = new Adapter()
 enzyme.configure({adapter})
-
+  let singleBook;
+  let fetchBook, addBook, loadAllReviews
+  
 describe('SingleBook', () => {
+
   let singleBook;
   const testBook =   {
       title: "One Hundred Years of Solitude",
@@ -31,11 +34,14 @@ describe('SingleBook', () => {
   }];
 
   beforeEach(() => {
-    singleBook = shallow(<SingleBook book = {testBook} user = {testUser} reviews = {testReviews}/>)
+    fetchBook= spy();
+    addBook = spy();
+    loadAllReviews = spy();
+    singleBook = shallow(<SingleBook fetchBook = {fetchBook} addBook = {addBook} loadAllReviews = {loadAllReviews} book = {testBook} user = {testUser} reviews = {testReviews}/>)
   })
 
   it('renders book title', () => {
-  	expect((singleBook.find('CardTitle').text()).to.be.equal(`by ${book.title}`))
+  	expect((singleBook.find('CardTitle').text()).to.be.equal(`by ${testBook.title}`))
     // expect(singleBook.find('h3').text()).to.be.equal('Welcome, cody@email.com')
   })
 })

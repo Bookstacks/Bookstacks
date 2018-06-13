@@ -14,29 +14,29 @@ describe('review model', () => {
 
       let contentSu, contentFail
 
-      Reviews.create({
-        content: 'I am at least 10 characters.'
-      })
-        .then(review => {
-          contentSu = review.content
-        })
+      // Reviews.create({
+      //   content: 'I am at least 10 characters.'
+      // })
+      //   .then(review => {
+      //     contentSu = review.content
+      //   })
 
 
-      it('creats reviews with at least 10 characters', () => {
-        expect(contentSu).to.equal('I am at least 10 characters.')
-    })
+    //   it('creats reviews with at least 10 characters', () => {
+    //     expect(contentSu).to.equal('I am at least 10 characters.')
+    // })
 
-      Reviews.create({
-        content: 'I am'
-      })
-        .then(review => {
-          contentFail = review.content
-        })
-        .catch(err => console.error(err))
+    //   Reviews.create({
+    //     content: 'I am'
+    //   })
+    //     .then(review => {
+    //       contentFail = review.content
+    //     })
+    //     .catch(err => console.error(err))
 
-      it('fails creats reviews with less than 10 characters', () => {
-        expect(contentFail).to.equal(undefined)
-      })
+    //   it('fails creats reviews with less than 10 characters', () => {
+    //     expect(contentFail).to.equal(undefined)
+    //   })
 
   })
 })

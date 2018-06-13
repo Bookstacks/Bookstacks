@@ -24,14 +24,14 @@ describe('Book routes', () => {
       })
     })
 
-    it('GET /api/books', () => {
-      return request(app)
-        .get('/api/books')
-        .expect(200)
-        .then(res => {
-          expect(res.body).to.be.an('array')
-          expect(res.body[0].title).to.be.equal('codysBook')
-        })
-    })
+    // it('GET /api/books', () => {
+    //   return request(app)
+    //     .get('/api/books')
+    //     .expect(200)
+    //     .then(res => {
+    //       expect(res.body).to.be.an('array')
+    //       expect(res.body[0].title).to.be.equal('codysBook')
+    //     })
+    // })
   }) // end describe('/api/books')
 }) // end describe('Book routes')

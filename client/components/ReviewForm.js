@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { postReview } from "../store";
-import { toast } from "react-toastify";
+import { connect } from 'react-redux';
+import { postReview } from '../store';
+import { toast } from 'react-toastify';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class ReviewFrom extends Component {
@@ -83,15 +83,14 @@ const mapStateToProps = state => {
       userId: state.user.id
     };
   };
-  
+
   const mapDispatchToProps = dispatch => {
     return {
       submitReview: review => dispatch(postReview(review))
     };
   };
-  
+
   export default connect(
     mapStateToProps,
     mapDispatchToProps
   )(ReviewFrom);
-  
