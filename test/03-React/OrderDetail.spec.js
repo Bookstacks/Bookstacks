@@ -13,25 +13,25 @@ describe('▒▒▒ Frontend tests ▒▒▒', () => {
   describe('Order', () => {
     let testOrder;
     let order = {
-    	id: 1,
-    	userId: 1,
-    	isCart: true,
-    	lineItems: [{
-    		id: 1,
-    		price: 10,
-    		quantity: 3,
-    		book: {
-    			title: 'Infinite Jest'
-    		}
-    	},
-    	{
-    		id: 2,
-    		price: 7,
-    		quantity: 1,
-    		book: {
-    			title: '1984'
-    		}
-    	}]
+	id: 1,
+	userId: 1,
+	isCart: true,
+	lineItems: [{
+		id: 1,
+		price: 10,
+		quantity: 3,
+		book: {
+			title: 'Infinite Jest'
+		}
+	},
+	{
+		id: 2,
+		price: 7,
+		quantity: 1,
+		book: {
+			title: '1984'
+		}
+	}]
     }
 
     beforeEach(() => {

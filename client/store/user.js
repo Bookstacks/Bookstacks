@@ -23,13 +23,16 @@ const removeUser = () => ({type: REMOVE_USER})
  */
 export const me = () =>
   dispatch =>{
+    const sessionId = localStorage.getItem('sessionId');
+    const userId = localStorage.getItem('userId');
     axios.get('/auth/me')
     .then(res => {
-      const sessionId = localStorage.getItem('sessionId');
-      const userId = localStorage.getItem('userId')
-      if (res.data) dispatch(getUser(res.data) || defaultUser)//if authenticated user data exist
-      else if (sessionId !== '' || userId !== '') dispatch(getUser({userId, sessionId}) || defaultUser)//if localStorage user data exist
-      else  {// if both user data does not exist, create guest
+      //if authenticated user data exist
+      if (res.data) dispatch(getUser(res.data) || defaultUser)
+      //if localStorage user data exist
+      else if (sessionId !== '' || userId !== '') dispatch(getUser({userId, sessionId}) || defaultUser)
+      // if both user data does not exist, create guest
+      else  {
          axios.post('auth/guest')
         .then(res => dispatch(getUser(res.data) || defaultUser))
         .catch(err => console.log(err)) 
@@ -49,7 +52,7 @@ export const auth = (email, password, method) =>
         })
         localStorage.clear()
         history.push('/home')
-      }, authError => { // rare example: a good use case for parallel (non-catch) error handler
+      }, authError => {
         dispatch(getUser({error: authError}))
       })
       .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr))
