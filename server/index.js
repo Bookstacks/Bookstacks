@@ -147,9 +147,43 @@ var books = [
       imageUrl: "/books/hundred_years.jpg",
       description: "One of the twentieth century’s most beloved and acclaimed novels, One Hundred Years of Solitude tells the story of the rise and fall, birth and death of the mythical town of Macondo through the history of the Buendia family. Inventive, amusing, magnetic, sad, and alive with unforgettable men and women—brimming with truth, compassion, and a lyrical magic that strikes the soul—this novel is a masterpiece in the art of fiction.",
       inventoryQuantity: 10
+  },
+  {
+    title: "In Search of Lost Time: Swann's Way",
+    author: "Marcel Proust",
+    genre: ["Modern Literature"],
+    price: 14,
+    imageUrl: "/books/in_search_of_lost_time.jpg",
+    description: "In Swann's Way, the themes of Proust's masterpiece are introduced, and the narrator's childhood in Paris and Combray is recalled, most memorably in the evocation of the famous maternal good-night kiss. The recollection of the narrato'.s love for Swann's daughter Gilberte leads to an account of Swann's passion for Odette and the rise of the nouveaux riches Verdurins.",
+    inventoryQuantity: 10
+  },
+  {
+    title: "The Trial",
+    author: "Franz Kafka",
+    genre: ["Philosophical Fiction"],
+    price: 10,
+    imageUrl: "/books/the_trial.jpg",
+    description: "The story of The Trial's publication is almost as fascinating as the novel itself. Kafka intended his parable of alienation in a mysterious bureaucracy to be burned, along with the rest of his diaries and manuscripts, after his death in 1924. Yet his friend Max Brod pressed forward to prepare The Trial and the rest of his papers for publication.",
+    inventoryQuantity: 10
+  },
+  {
+    title: "A Portrait of the Artist as a Young Man",
+    author: "James Joyce",
+    genre: ["Fiction"],
+    price: 5,
+    imageUrl: "/books/portrait.jpg",
+    description: "Like much of James Joyce's work, A Portrait of the Artist as a Young Man is a fictional re-creation of the Irish writer's own life and early environment. The experiences of the novel's young hero, Stephen Dedalus, unfold in astonishingly vivid scenes that seem freshly recalled from life and provide a powerful portrait of the coming of age of a young man of unusual intelligence, sensitivity, and character.",
+    inventoryQuantity: 10
+  },
+  {
+    title: "The Stranger",
+    author: "Albert Camus",
+    genre: ["Existential novel"],
+    price: 10,
+    imageUrl: "/books/stranger.jpg",
+    description: "Through the story of an ordinary man unwittingly drawn into a senseless murder on an Algerian beach, Camus explored what he termed the nakedness of man faced with the absurd. First published in 1946; now in a new translation by Matthew Ward.",
+    inventoryQuantity: 10
   }
-
-
 ]
 
 const syncDb = () => db.sync({force : true})

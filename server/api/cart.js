@@ -51,9 +51,6 @@ router.post("/:userId/:bookId", (req, res) => {
                     })
                   } else {
                     lineItem.increment(['quantity'], {by : 1})
-                    // lineItem.update({
-                    //   quantity: Sequelize.literal("quantity + 1")
-                    // })
                   }
                 })
                 .then(cart => {
@@ -70,7 +67,6 @@ router.post("/:userId/:bookId", (req, res) => {
 
 router.put('/:lineItemId', (req, res, next) => {
     let { lineItemId } = req.params;
-    console.log(req.body)
     let increment = req.body.increment;
     LineItem.findById(lineItemId)
     .then(lineItem => {
@@ -81,7 +77,6 @@ router.put('/:lineItemId', (req, res, next) => {
       })
     })
     .then(lineItem => {
-      console.log(lineItem)
       res.status(202).json(lineItem.dataValues)})
     .catch(next);
 })

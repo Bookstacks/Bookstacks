@@ -3,7 +3,7 @@ const { Order, LineItem } = require('../db/models')
 module.exports = router
 
 router.post('/', (req, res, next) => {
-  Order.create({userId : req.body.userId})
+		Order.create({userId : req.body.userId})
   	.then((order) => {
   		//Get Line Items from req.body and create all. 
   		LineItem.create({
@@ -14,4 +14,5 @@ router.post('/', (req, res, next) => {
   	})
     .then(order => res.status(200).send(order))
     .catch(next)
+	}
 })

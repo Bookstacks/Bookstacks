@@ -3,7 +3,6 @@ const { Book } = require("../db/models");
 module.exports = router;
 
 router.get("/", (req, res, next) => {
-  console.log(req.user)
   Book.findAll()
     .then(books => res.json(books))
     .catch(next);

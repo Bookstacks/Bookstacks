@@ -1,6 +1,6 @@
 body {
   font-family: 'Slabo 27px', serif !important;
-  margin: 0;
+  margin-bottom: 80px !important;
 }
 
 .background-color {
@@ -69,7 +69,7 @@ button{
   text-align: center;
   margin : 0.5em;
 }
-#card-title: {
+#card-title {
   text-align : left;
 }
 
@@ -91,20 +91,20 @@ button{
   margin: 0.8em;
 }
 
-<<<<<<< HEAD
 footer {
+  position: fixed !important;
+  bottom: 0 !important;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: white;
   height: 50px;
+  width: 100%;
 }
 
-=======
 .navbar{
   box-shadow: 1 1 4px 4px #0040FF; ;
 }
->>>>>>> master
 /*
 
 nav {
