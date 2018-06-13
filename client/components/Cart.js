@@ -42,7 +42,7 @@ class Cart extends Component {
     render() {
         const {lineItems} = this.props.cart;
         const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
-
+        const link = this.props.user.email ? '/checkout' : '/guestCheckout';
         return lineItems ? (
             <div>
                 <h1 className='title' >Cart</h1>
@@ -57,7 +57,9 @@ class Cart extends Component {
                     })}
                     </CardDeck>
                 </div>
-              {this.props.user.email ? <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link> : <Link to='/guestCheckout'><button>PROCEED TO CHECKOUT</button></Link>}
+                <div id = 'link-checkout'>
+                  <Link to={link}><button>PROCEED TO CHECKOUT</button></Link> 
+                </div>
             </div>
         )
         : 

@@ -112,6 +112,7 @@ class SingleBook extends Component {
           </h4>
           <Container>
             <Button
+              id='review-form-button'
               name='reviewForm'
               color="primary"
               onClick={this.toggleForm}
