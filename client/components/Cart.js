@@ -27,10 +27,10 @@ class Cart extends Component {
 
     handleSubtract(ev) {
         ev.preventDefault();
-        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
-        const [lineItem] = this.props.cart.lineItems.filter(item => item.id)
-        const bookId = ev.target.name;
-        if (lineItem.quantity >=1) this.props.updateAndReloadCart(ev.target.name, userId, -1);
+        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')        
+        const bookId = +ev.target.name;
+        const [lineItem] = this.props.cart.lineItems.filter(item => item.bookId === bookId)
+        if (lineItem.quantity >= 1) this.props.updateAndReloadCart(bookId, userId, -1);
     }
 
     handleDelete(ev) {
@@ -41,7 +41,6 @@ class Cart extends Component {
 
     render() {
         const {lineItems} = this.props.cart;
-        const userId = this.props.user.email ? this.props.user.id : localStorage.getItem('userId')
         const link = this.props.user.email ? '/checkout' : '/guestCheckout';
         return lineItems ? (
             <div>

@@ -1,20 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { fetchBook, showModal } from "../store";
 
 class BookModal extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       modal: false
     };
-
     this.toggle = this.toggle.bind(this);
   }
 
-  toggle(event) {
-    
+  toggle(event) {    
     if (event.target.value === 'addToCart') this.props.addToCart(event)
     this.setState({
       modal: !this.state.modal

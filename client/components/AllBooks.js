@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchBooks, fetchAddedItem, fetchBook } from "../store";
 import BookCard from "./BookCard";
 import {toast} from 'react-toastify'

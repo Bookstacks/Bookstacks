@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchCart } from "../store";
 import Payment from './Payment';
 import PaymentMade from './PaymentMade';
@@ -34,7 +33,6 @@ class Checkout extends Component {
     }
 
     render() {
-        const items = this.props.cart.lineItems
         return (
             <div id='confirmation'>
               {

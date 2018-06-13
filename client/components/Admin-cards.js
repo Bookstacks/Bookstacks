@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
 import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, Button
-} from 'reactstrap';
-import {Link} from 'react-router-dom'
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  Button
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
-const AdminCard = (props) => {
+const AdminCard = props => {
   return (
     <div>
       <Card>
@@ -13,12 +17,15 @@ const AdminCard = (props) => {
         <CardBody>
           <CardTitle>View All {props.title}</CardTitle>
           <CardText>Click below to see all {props.title}.</CardText>
-          {(props.title==='Products')?<Link to={`/allbooks`}>
-            <Button>View All {props.title}</Button>
-          </Link>:
-          <Link to={`/admin/${props.title}`}>
-            <Button>View All {props.title}</Button>
-          </Link>}
+          {props.title === "Products" ? (
+            <Link to={`/allbooks`}>
+              <Button>View All {props.title}</Button>
+            </Link>
+          ) : (
+            <Link to={`/admin/${props.title}`}>
+              <Button>View All {props.title}</Button>
+            </Link>
+          )}
         </CardBody>
       </Card>
     </div>
